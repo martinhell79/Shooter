@@ -34,11 +34,10 @@ try:
         pygame.image.load("img/back.png").convert_alpha()
     ]
     background_image = pygame.transform.scale(background_images[0], (const.screen_width, const.screen_height))
+    # flying objects
     flying_object = pygame.image.load("img/cyber.png") 
-    # Calculate the new width and height based on the percentage scale
     new_width = int(flying_object.get_width() * const.scale_flying_object)
     new_height = int(flying_object.get_height() * const.scale_flying_object)
-    # Resize the image to the calculated dimensions
     flying_object = pygame.transform.scale(flying_object, (new_width, new_height))
     sprite_mask = pygame.mask.from_surface(flying_object)
     # print mask
@@ -46,6 +45,12 @@ try:
         for y in range(sprite_mask.get_size()[1]):
             if sprite_mask.get_at((x, y)):
                 pygame.draw.rect(screen, (255, 255, 255), (x, y, 1, 1))  # Draw a red pixel
+    crosshair_image = pygame.image.load("img/crosshair.png")
+    crosshair_image = pygame.transform.scale(crosshair_image, (100, 100))
+    # Define the hotspot coordinates (center of the crosshair)
+    hotspot = (crosshair_image.get_width() // 2, crosshair_image.get_height() // 2)
+
+
 except pygame.error:
     print("Error loading the background or flying object image.")
 
@@ -122,7 +127,13 @@ currentstate = GameState['Playing'];
 running = True
 while running:
     if (currentstate == GameState['Playing']):
-        screen.fill((255, 255, 255))
+        screen.fill((255, 255, 255)) # take this away?
+        # Set the mouse cursor to the crosshair image
+        pygame.mouse.set_visible(False)
+        mouse_x, mouse_y = pygame.mouse.get_pos()
+        screen.blit(crosshair_image, (mouse_x - crosshair_image.get_width() / 2, mouse_y - crosshair_image.get_height() / 2))
+
+
         current_time = time.time()
         dt = current_time - last_time
         last_time = current_time
@@ -177,7 +188,11 @@ while running:
                 score_popups.remove(popup)
                 continue
             popup_hitscore(int(popup['score']), popup['x'], popup['y'])
-            
+
+        # replace cursor with crosshair
+        mouse_x, mouse_y = pygame.mouse.get_pos()
+        screen.blit(crosshair_image, (mouse_x - crosshair_image.get_width() / 2, mouse_y - crosshair_image.get_height() / 2))
+    
         # Remove objects that have left the screen
         objects = [obj for obj in objects if obj.x >= -50 and obj.x <= const.screen_width + 50 and obj.y >= -50 and obj.y <= const.screen_height + 50]
 
@@ -200,6 +215,8 @@ while running:
                 if event.key == pygame.K_ESCAPE:
                     running = False
         screen.fill((0, 0, 0))  # Clear the screen
+        #pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW) # get normal cursor
+        pygame.mouse.set_visible(True)
         final_score_text = font.render(f"Final Score: {int(score)}", True, (255, 255, 255))
         screen.blit(final_score_text, (const.screen_width // 6 , const.screen_height // 2 - 50))
         hs.display_highscores(pygame, screen, const.screen_width, const.screen_height)
