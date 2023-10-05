@@ -31,7 +31,7 @@ pygame.display.set_caption('Point and Click Shooting Game') # Window title
 # Load all images
 try:
     background_images = [
-        pygame.image.load("img/back.png").convert_alpha()
+        pygame.image.load("./img/bg1920x1080.jpg").convert_alpha()
     ]
     background_image = pygame.transform.scale(background_images[0], (const.screen_width, const.screen_height))
     # flying objects
@@ -40,13 +40,13 @@ try:
     new_height = int(flying_object.get_height() * const.scale_flying_object)
     flying_object = pygame.transform.scale(flying_object, (new_width, new_height))
     sprite_mask = pygame.mask.from_surface(flying_object)
-    # print mask
+    # print mask. Just to check that masking works. Will not be visible when we add background on top of it.
     for x in range(sprite_mask.get_size()[0]):
         for y in range(sprite_mask.get_size()[1]):
             if sprite_mask.get_at((x, y)):
                 pygame.draw.rect(screen, (255, 255, 255), (x, y, 1, 1))  # Draw a red pixel
     crosshair_image = pygame.image.load("img/crosshair.png")
-    crosshair_image = pygame.transform.scale(crosshair_image, (100, 100))
+    crosshair_image = pygame.transform.scale(crosshair_image, (50, 50))
     # Define the hotspot coordinates (center of the crosshair)
     hotspot = (crosshair_image.get_width() // 2, crosshair_image.get_height() // 2)
 
