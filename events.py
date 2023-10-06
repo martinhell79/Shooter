@@ -1,7 +1,7 @@
 import game_setup
-import constants as const
 import pygame
 from game_object import AnimationObject
+import render
 
 SCREEN = game_setup.screen
 
@@ -10,17 +10,7 @@ SPRITE_MASK = game_setup.sprite_mask
 PLANE_L_MASK = game_setup.plane_l_mask
 PLANE_R_MASK = game_setup.plane_r_mask
 
-def popup_hitscore(score, x, y):
-    # Create a text surface with a transparent background
-    font = pygame.font.Font(None, 48)
-    text = font.render(str(score), True, const.YELLOW, const.TRANSPARENT)
 
-    # Get the text rect to position it
-    text_rect = text.get_rect()
-    text_rect.center = (x+10, y+10)
-
-    # Blit the text surface onto the game screen
-    SCREEN.blit(text, text_rect)
 
 def is_click_on_sprite(mouse_x, mouse_y, sprite_x, sprite_y):
     # Calculate the local coordinates within the sprite
@@ -45,7 +35,7 @@ def is_click_on_sprite(mouse_x, mouse_y, sprite_x, sprite_y):
     return False
 
 
-def consume_events(score, objects, planes, score_popups, explosions, current_time):
+def consume_events(score, objects, planes, score_popups, explosions, laser_shots, current_time):
     running = True
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -55,6 +45,7 @@ def consume_events(score, objects, planes, score_popups, explosions, current_tim
                 running = False
         elif event.type == pygame.MOUSEBUTTONDOWN:
             mouse_x, mouse_y = pygame.mouse.get_pos()
+            laser_shots.append(AnimationObject(mouse_x, mouse_y, images=game_setup.VFX_LASER, x_offset=game_setup.FLYING_OBJECT_WIDTH//17, y_offset=game_setup.FLYING_OBJECT_HEIGHT//12,size_modifier=0.07))
             for obj in objects[:]:
                 time_elapsed = current_time - obj.timestamp
                 hit = is_click_on_sprite(mouse_x, mouse_y, int(obj.x), int(obj.y))

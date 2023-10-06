@@ -71,6 +71,9 @@ try:
 
     # Import explosion VFX
     VFX_EXPLOSION = import_animation(vfx_dir="img/effects/explosion")
+
+    # Import laser shot VFX
+    VFX_LASER = import_animation(vfx_dir="img/effects/laser")
     
 
 
