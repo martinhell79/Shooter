@@ -25,7 +25,8 @@ flying_object = game_setup.FLYING_OBJECT
 sprite_mask = game_setup.sprite_mask
 crosshair_image = game_setup.crosshair_image
 hotspot = game_setup.hotspot
-plane = game_setup.PLANE
+plane_l = game_setup.PLANE_L
+plane_r = game_setup.PLANE_R
 
 '''
 #function to update background image
@@ -88,15 +89,24 @@ def spawn_object():
     return FlyingObject(initial_x, initial_y, flying_object, velocity, speed)
 
 #spawn new plane that flies on a static path across the screen.
-def spawn_plane():
+def spawn_plane(direction):
     speed = random.uniform(const.MIN_SPEED_PLANE, const.MAX_SPEED_PLANE)
-    angle = radians(195)
+    if direction == 'left':
+        angle = radians(195)
+        plane = plane_l
+        start_x = const.screen_width+50
+        start_y = random.randint(int(0.05 * const.screen_height), int(0.80 * const.screen_height))
+    elif direction =='right':
+        angle = radians(345)
+        plane = plane_r
+        start_x = -50
+        start_y = random.randint(int(0.05 * const.screen_height), int(0.80 * const.screen_height))
     velocity = [speed * cos(angle), -speed * sin(angle)] 
-    return FlyingObject(const.screen_width, int(0.15 * const.screen_height), plane, velocity, speed)
+    return FlyingObject(start_x, start_y, plane, velocity, speed)
 
 def start_game():
     #Gameplay variables
-    planes = [spawn_plane() for _ in range(1)] # Lets start with one plane
+    planes = [spawn_plane('right') for _ in range(1)] # Lets start with one plane
     objects = [spawn_object() for _ in range(4)] # Initialize the first object and object list
     next_spawn_time = time.time() + random.uniform(0.1, 0.7) # Timer to control the spawning of new objects
     score = 0 # Initialize score
@@ -115,7 +125,6 @@ def start_game():
             pygame.mouse.set_visible(False)
             mouse_x, mouse_y = pygame.mouse.get_pos()
             screen.blit(crosshair_image, (mouse_x - crosshair_image.get_width() / 2, mouse_y - crosshair_image.get_height() / 2))
-
 
             current_time = time.time()
             dt = current_time - last_time
@@ -157,7 +166,6 @@ def start_game():
             for obj in objects:
                 obj.update(dt)
                 obj.draw(screen, const.DEFAULT_FONT, current_time)  # Pass the font and current time
-
             for plane in planes:
                 plane.update(dt)
                 plane.draw(screen, const.DEFAULT_FONT, current_time)  # Pass the font and current time
@@ -192,11 +200,16 @@ def start_game():
         
             # Remove objects that have left the screen
             objects = [obj for obj in objects if obj.x >= -50 and obj.x <= const.screen_width + 50 and obj.y >= -50 and obj.y <= const.screen_height + 50]
+            planes = [plane for plane in planes if plane.x > -50 and plane.x <= const.screen_width + 50]
 
             # Spawn a new object if fewer than 4 are present
             if len(objects) < 4 and current_time >= next_spawn_time:
                 objects.append(spawn_object())
                 next_spawn_time = current_time + random.uniform(0.1, 0.7)
+
+            if len(planes) < 1:
+                planes.append(spawn_plane('left'))
+
             pygame.display.flip()  # Update the display
 
         elif (currentstate == GAME_STATE['Game Over']):

@@ -46,12 +46,20 @@ try:
     FLYING_OBJECT = pygame.transform.scale(FLYING_OBJECT, (FLYING_OBJECT_WIDTH, FLYING_OBJECT_HEIGHT))
     sprite_mask = pygame.mask.from_surface(FLYING_OBJECT)
     
-    #plane
-    PLANE = pygame.image.load("img/plane.png")
-    new_width = int(PLANE.get_width() * const.scale_plane)
-    new_height = int(PLANE.get_height() * const.scale_plane)
-    PLANE = pygame.transform.scale(PLANE, (new_width, new_height))
-    plane_mask = pygame.mask.from_surface(PLANE)
+    #plane flying left
+    PLANE_L = pygame.image.load("img/plane_l.png")
+    new_width = int(PLANE_L.get_width() * const.scale_plane)
+    new_height = int(PLANE_L.get_height() * const.scale_plane)
+    PLANE_L = pygame.transform.scale(PLANE_L, (new_width, new_height))
+    plane_l_mask = pygame.mask.from_surface(PLANE_L)
+    
+    #plane flying left
+    PLANE_R = pygame.image.load("img/plane_r.png")
+    new_width = int(PLANE_R.get_width() * const.scale_plane)
+    new_height = int(PLANE_R.get_height() * const.scale_plane)
+    PLANE_R = pygame.transform.scale(PLANE_R, (new_width, new_height))
+    plane_r_mask = pygame.mask.from_surface(PLANE_R)
+    
     # print mask. Just to check that masking works. Will not be visible when we add background on top of it.
     for x in range(sprite_mask.get_size()[0]):
         for y in range(sprite_mask.get_size()[1]):

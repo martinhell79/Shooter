@@ -17,7 +17,7 @@ MAX_SPEED_FLYING_OBJECT = 300
 
 
 # Scale planes if images are not correct size
-scale_plane = 0.2
+scale_plane = 0.4
 
 # Set min and max speed of flying objects
 MIN_SPEED_PLANE = 250
