@@ -21,7 +21,7 @@ Shooter is a simple computer game where players can test their aiming and shooti
 
 1. Clone the repository or download the game files.
 2. Ensure you have Python 3 installed.
-3. Run the game using `python main.py`.
+3. Run the game using `python game.py`.
 
 ## Customization
 

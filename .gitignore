@@ -45,3 +45,6 @@ coverage.xml
 
 # Jupyter Notebook
 .ipynb_checkpoints
+
+# Game files
+highscores.txt
