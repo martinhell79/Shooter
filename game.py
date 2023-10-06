@@ -24,7 +24,7 @@ plane_r = game_setup.PLANE_R
 def start_game(time_limit=30):
     #Gameplay variables
     remaining_time = time_limit
-    planes = [spawn.spawn_plane('right') for _ in range(1)] # Lets start with one plane
+    planes = [spawn.spawn_plane() for _ in range(1)] # Lets start with one plane
     objects = [spawn.spawn_object() for _ in range(4)] # Initialize the first object and object list
     next_spawn_time = time.time() + random.uniform(0.1, 0.7) # Timer to control the spawning of new objects
     score = 0 # Initialize score
@@ -50,7 +50,7 @@ def start_game(time_limit=30):
             if remaining_time == 0:
                 currentstate = GAME_STATE['Game Over'];
             
-            running, score = events.consume_events(score, objects, score_popups, explosions, current_time)
+            running, score = events.consume_events(score, objects, planes, score_popups, explosions, current_time)
             
             render.render_objects(objects + planes, current_time=current_time, dt=dt)
 
@@ -64,7 +64,7 @@ def start_game(time_limit=30):
 
             # Remove objects that have left the screen
             objects = [obj for obj in objects if obj.x >= -50 and obj.x <= const.screen_width + 50 and obj.y >= -50 and obj.y <= const.screen_height + 50]
-            planes = [plane for plane in planes if plane.x > -50 and plane.x <= const.screen_width + 50]
+            planes = [plane for plane in planes if plane.x > -50 and plane.x <= const.screen_width + 50 and plane.y >= -50 and plane.y <= const.screen_height + 50]
 
             # Spawn a new object if fewer than 4 are present
             if len(objects) < 4 and current_time >= next_spawn_time:
@@ -72,7 +72,7 @@ def start_game(time_limit=30):
                 next_spawn_time = current_time + random.uniform(0.1, 0.7)
 
             if len(planes) < 1:
-                planes.append(spawn.spawn_plane('left'))
+                planes.append(spawn.spawn_plane())
 
             pygame.display.flip()  # Update the display
 

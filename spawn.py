@@ -34,14 +34,15 @@ def spawn_object():
     return FlyingObject(initial_x, initial_y, flying_object, velocity, speed)
 
 #spawn new plane that flies on a static path across the screen.
-def spawn_plane(direction):
+def spawn_plane():
+    dir = random.randint(0,1)
     speed = random.uniform(const.MIN_SPEED_PLANE, const.MAX_SPEED_PLANE)
-    if direction == 'left':
+    if dir == 0:
         angle = radians(195)
         plane = plane_l
         start_x = const.screen_width+50
         start_y = random.randint(int(0.05 * const.screen_height), int(0.80 * const.screen_height))
-    elif direction =='right':
+    elif dir == 1:
         angle = radians(345)
         plane = plane_r
         start_x = -50

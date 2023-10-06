@@ -15,6 +15,9 @@ scale_plane = 0.4
 MIN_SPEED_PLANE = 250
 MAX_SPEED_PLANE = 400
 
+# penalty for hitting a plane
+PLANE_PENALTY = -500
+
 # Colors
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
