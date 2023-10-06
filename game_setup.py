@@ -1,5 +1,6 @@
 import pygame
 import constants as const
+import os
 
 
 # Init game variables
@@ -22,6 +23,15 @@ start_time = pygame.time.get_ticks()
 
 pygame.display.set_caption('Point and Click Shooting Game') # Window title
 
+def import_animation(vfx_dir):
+    vfx_frames = []
+    for filename in sorted(os.listdir(vfx_dir)):
+        if filename.endswith('.png'):
+            frame = pygame.image.load(os.path.join(vfx_dir, filename))
+            vfx_frames.append(frame)
+
+    return vfx_frames
+
 # Load all images
 try:
     background_images = [
@@ -30,9 +40,9 @@ try:
     background_image = pygame.transform.scale(background_images[0], (const.screen_width, const.screen_height))
     # flying objects
     FLYING_OBJECT = pygame.image.load("img/cyber.png") 
-    new_width = int(FLYING_OBJECT.get_width() * const.scale_flying_object)
-    new_height = int(FLYING_OBJECT.get_height() * const.scale_flying_object)
-    FLYING_OBJECT = pygame.transform.scale(FLYING_OBJECT, (new_width, new_height))
+    FLYING_OBJECT_WIDTH = int(FLYING_OBJECT.get_width() * const.scale_flying_object)
+    FLYING_OBJECT_HEIGHT = int(FLYING_OBJECT.get_height() * const.scale_flying_object)
+    FLYING_OBJECT = pygame.transform.scale(FLYING_OBJECT, (FLYING_OBJECT_WIDTH, FLYING_OBJECT_HEIGHT))
     sprite_mask = pygame.mask.from_surface(FLYING_OBJECT)
     # print mask. Just to check that masking works. Will not be visible when we add background on top of it.
     for x in range(sprite_mask.get_size()[0]):
@@ -44,6 +54,12 @@ try:
     # Define the hotspot coordinates (center of the crosshair)
     hotspot = (crosshair_image.get_width() // 2, crosshair_image.get_height() // 2)
 
+    # Import explosion VFX
+    VFX_EXPLOSION = import_animation(vfx_dir="img/effects/explosion")
+    
+
+
 
 except pygame.error:
     print("Error loading the background or flying object image.")
+

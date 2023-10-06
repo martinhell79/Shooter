@@ -82,3 +82,21 @@ class NonFlyingObject(BaseObject):
     def update(self, dt):
         # Implement update logic for non-flying objects
         pass
+
+
+class AnimationObject:
+    def __init__(self, x, y, images, x_offset = 0, y_offset = 0):
+        self.x = x - int(x_offset)
+        self.y = y - int(y_offset)
+        self.images = images
+        self.current_frame = 0
+    
+    def draw(self, screen) -> bool:
+        # Draw the next frame of the animation
+        if self.current_frame >= len(self.images):
+            return True
+        
+        image = self.images[self.current_frame]
+        screen.blit(image, (self.x, self.y))
+        self.current_frame += 1
+        return False
