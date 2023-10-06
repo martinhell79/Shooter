@@ -13,6 +13,14 @@ scale_flying_object = 0.3
 MIN_SPEED_FLYING_OBJECT = 100
 MAX_SPEED_FLYING_OBJECT = 300
 
+# Colors
+WHITE = (255, 255, 255)
+BLACK = (0, 0, 0)
+YELLOW = (255, 255, 0)
+
+TRANSPARENT = (0, 0, 0, 0)
+
+DEFAULT_FONT = None
 
 #Will be initialized upon setup
 screen_width = 0
