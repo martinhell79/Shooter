@@ -30,6 +30,7 @@ def start_game(time_limit=30):
     score = 0 # Initialize score
     score_popups = [] # Add a list to store individual score pop-ups
     explosions = []
+    laser_shots = []
 
     last_time = time.time()
 
@@ -50,7 +51,7 @@ def start_game(time_limit=30):
             if remaining_time == 0:
                 currentstate = GAME_STATE['Game Over'];
             
-            running, score = events.consume_events(score, objects, score_popups, explosions, current_time)
+            running, score = events.consume_events(score, objects, score_popups, explosions, laser_shots, current_time)
             
             render.render_objects(objects + planes, current_time=current_time, dt=dt)
 
@@ -60,7 +61,8 @@ def start_game(time_limit=30):
 
             render.render_cursor(crosshair_image)
 
-            explosions = render.render_explosions(explosions)
+            explosions = render.render_animations(explosions)
+            laser_shots = render.render_animations(laser_shots)
 
             # Remove objects that have left the screen
             objects = [obj for obj in objects if obj.x >= -50 and obj.x <= const.screen_width + 50 and obj.y >= -50 and obj.y <= const.screen_height + 50]

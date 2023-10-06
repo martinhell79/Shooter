@@ -1,5 +1,6 @@
 import time
 import constants as const
+import pygame
 
 class BaseObject:
     def __init__(self, x, y, image=None):
@@ -89,11 +90,12 @@ class NonFlyingObject(BaseObject):
 
 
 class AnimationObject:
-    def __init__(self, x, y, images, x_offset = 0, y_offset = 0):
+    def __init__(self, x, y, images, x_offset = 0, y_offset = 0, size_modifier=1):
         self.x = x - int(x_offset)
         self.y = y - int(y_offset)
         self.images = images
         self.current_frame = 0
+        self.size_modifier = size_modifier
     
     def draw(self, screen) -> bool:
         # Draw the next frame of the animation
@@ -101,6 +103,7 @@ class AnimationObject:
             return True
         
         image = self.images[self.current_frame]
-        screen.blit(image, (self.x, self.y))
+        resized_image = pygame.transform.scale(image, (int(image.get_width() * self.size_modifier), int(image.get_height() * self.size_modifier)))
+        screen.blit(resized_image, (self.x, self.y))
         self.current_frame += 1
         return False
