@@ -20,13 +20,14 @@ class BaseObject:
 
 
 class FlyingObject(BaseObject):
-    def __init__(self, x, y, image, velocity, speed):
+    def __init__(self, x, y, image, velocity, speed, debug=False):
         super().__init__(x, y, image)
         self.velocity = velocity
         self.total_time = None  # Calculate this based on velocity and screen size
         # Calculate start and end score based on speed
         self.start_score = 100 + (speed - const.MIN_SPEED_FLYING_OBJECT) * (100 / (const.MAX_SPEED_FLYING_OBJECT - const.MIN_SPEED_FLYING_OBJECT))
         self.end_score = 20 + (speed - const.MIN_SPEED_FLYING_OBJECT) * (20 / (const.MAX_SPEED_FLYING_OBJECT - const.MIN_SPEED_FLYING_OBJECT))
+        self.debug = debug
 
         # Calculate intersection point with each edge of the screen
         t_to_left = (0 - x) / velocity[0] if velocity[0] < 0 else float('inf')
@@ -51,8 +52,9 @@ class FlyingObject(BaseObject):
         screen.blit(self.image, (int(self.x), int(self.y)))
         #Compute and display current score for object
         current_score = self.end_score + (self.start_score - self.end_score) * (1 - (time_elapsed / self.total_time))
-        score_text = font.render(f"{int(current_score)}", True, const.WHITE)
-        screen.blit(score_text, (int(self.x) - 25, int(self.y)))
+        if self.debug:
+            score_text = font.render(f"{int(current_score)}", True, const.WHITE)
+            screen.blit(score_text, (int(self.x) - 25, int(self.y)))
 
     def update(self, dt):
         self.x += self.velocity[0] * dt
@@ -60,10 +62,11 @@ class FlyingObject(BaseObject):
 
 
 class NonFlyingObject(BaseObject):
-    def __init__(self, x, y, image, lifespan):
+    def __init__(self, x, y, image, lifespan, debug=False):
         super().__init__(x, y, image)
         self.lifespan = lifespan
         self.time_remaining = lifespan
+        self.debug = debug
 
     def draw(self, screen, font, current_time):
         # Calculate time remaining for the non-flying object
@@ -73,9 +76,10 @@ class NonFlyingObject(BaseObject):
         # Draw the object's image at its current position
         screen.blit(self.image, (int(self.x), int(self.y)))
 
-        # Display the remaining lifespan of the object
-        lifespan_text = font.render(f"Time Remaining: {int(self.time_remaining)}", True, (255, 255, 255))
-        screen.blit(lifespan_text, (int(self.x) - 25, int(self.y) - 20))
+        if self.debug:
+            # Display the remaining lifespan of the object
+            lifespan_text = font.render(f"Time Remaining: {int(self.time_remaining)}", True, (255, 255, 255))
+            screen.blit(lifespan_text, (int(self.x) - 25, int(self.y) - 20))
 
         # Optionally, you can add interaction logic here
 
