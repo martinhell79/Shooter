@@ -43,27 +43,26 @@ try:
     FLYING_OBJECT_WIDTH = int(FLYING_OBJECT.get_width() * const.scale_flying_object)
     FLYING_OBJECT_HEIGHT = int(FLYING_OBJECT.get_height() * const.scale_flying_object)
     FLYING_OBJECT = pygame.transform.scale(FLYING_OBJECT, (FLYING_OBJECT_WIDTH, FLYING_OBJECT_HEIGHT))
-    sprite_mask = pygame.mask.from_surface(FLYING_OBJECT)
     
     #plane flying left
     PLANE_L = pygame.image.load("img/plane_l.png")
-    new_width = int(PLANE_L.get_width() * const.scale_plane)
-    new_height = int(PLANE_L.get_height() * const.scale_plane)
-    PLANE_L = pygame.transform.scale(PLANE_L, (new_width, new_height))
-    plane_l_mask = pygame.mask.from_surface(PLANE_L)
+    PLANE_L_WIDTH = int(PLANE_L.get_width() * const.scale_plane)
+    PLANE_L_HEIGHT = int(PLANE_L.get_height() * const.scale_plane)
+    PLANE_L = pygame.transform.scale(PLANE_L, (PLANE_L_WIDTH, PLANE_L_HEIGHT))
     
-    #plane flying left
+    #plane flying right
     PLANE_R = pygame.image.load("img/plane_r.png")
-    new_width = int(PLANE_R.get_width() * const.scale_plane)
-    new_height = int(PLANE_R.get_height() * const.scale_plane)
-    PLANE_R = pygame.transform.scale(PLANE_R, (new_width, new_height))
-    plane_r_mask = pygame.mask.from_surface(PLANE_R)
+    PLANE_R_WIDTH = int(PLANE_R.get_width() * const.scale_plane)
+    PLANE_R_HEIGHT = int(PLANE_R.get_height() * const.scale_plane)
+    PLANE_R = pygame.transform.scale(PLANE_R, (PLANE_R_WIDTH, PLANE_R_HEIGHT))
     
     # print mask. Just to check that masking works. Will not be visible when we add background on top of it.
-    for x in range(sprite_mask.get_size()[0]):
-        for y in range(sprite_mask.get_size()[1]):
-            if sprite_mask.get_at((x, y)):
-                pygame.draw.rect(screen, const.WHITE, (x, y, 1, 1))  # Draw a pixel
+    mask = pygame.mask.from_surface(PLANE_R)
+    for x in range(mask.get_size()[0]):
+        for y in range(mask.get_size()[1]):
+            if mask.get_at((x, y)):
+                pygame.draw.rect(screen, const.YELLOW, (x, y, 1, 1))  # Draw a pixel
+    
     crosshair_image = pygame.image.load("img/crosshair.png")
     crosshair_image = pygame.transform.scale(crosshair_image, (50, 50))
     # Define the hotspot coordinates (center of the crosshair)

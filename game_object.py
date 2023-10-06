@@ -10,7 +10,7 @@ class BaseObject:
         self.timestamp = time.time()
         self.start_score = None  # Calculate this based on speed
         self.end_score = None  # Calculate this based on speed
-    
+
     def draw(self, screen, font, current_time):
         # Common drawing logic for all objects
         pass
@@ -29,6 +29,7 @@ class FlyingObject(BaseObject):
         self.start_score = 100 + (speed - const.MIN_SPEED_FLYING_OBJECT) * (100 / (const.MAX_SPEED_FLYING_OBJECT - const.MIN_SPEED_FLYING_OBJECT))
         self.end_score = 20 + (speed - const.MIN_SPEED_FLYING_OBJECT) * (20 / (const.MAX_SPEED_FLYING_OBJECT - const.MIN_SPEED_FLYING_OBJECT))
         self.debug = debug
+
 
         # Calculate intersection point with each edge of the screen
         t_to_left = (0 - x) / velocity[0] if velocity[0] < 0 else float('inf')
