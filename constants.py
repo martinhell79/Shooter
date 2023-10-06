@@ -13,6 +13,16 @@ scale_flying_object = 0.3
 MIN_SPEED_FLYING_OBJECT = 100
 MAX_SPEED_FLYING_OBJECT = 300
 
+
+
+
+# Scale planes if images are not correct size
+scale_plane = 0.2
+
+# Set min and max speed of flying objects
+MIN_SPEED_PLANE = 250
+MAX_SPEED_PLANE = 400
+
 # Colors
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)

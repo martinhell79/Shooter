@@ -25,6 +25,7 @@ flying_object = game_setup.FLYING_OBJECT
 sprite_mask = game_setup.sprite_mask
 crosshair_image = game_setup.crosshair_image
 hotspot = game_setup.hotspot
+plane = game_setup.PLANE
 
 '''
 #function to update background image
@@ -61,6 +62,7 @@ def is_click_on_sprite(mouse_x, mouse_y, sprite_x, sprite_y, sprite_mask):
 
     return False
 
+# spawn new object that flies in a straight line across the screen. Apply some restrictions so that they actually cross the full screen.
 def spawn_object():
     edge = random.choice(['top', 'bottom', 'left', 'right'])
     angle_range = {
@@ -85,10 +87,16 @@ def spawn_object():
     
     return FlyingObject(initial_x, initial_y, flying_object, velocity, speed)
 
-
+#spawn new plane that flies on a static path across the screen.
+def spawn_plane():
+    speed = random.uniform(const.MIN_SPEED_PLANE, const.MAX_SPEED_PLANE)
+    angle = radians(195)
+    velocity = [speed * cos(angle), -speed * sin(angle)] 
+    return FlyingObject(const.screen_width, int(0.15 * const.screen_height), plane, velocity, speed)
 
 def start_game():
     #Gameplay variables
+    planes = [spawn_plane() for _ in range(1)] # Lets start with one plane
     objects = [spawn_object() for _ in range(4)] # Initialize the first object and object list
     next_spawn_time = time.time() + random.uniform(0.1, 0.7) # Timer to control the spawning of new objects
     score = 0 # Initialize score
@@ -133,21 +141,22 @@ def start_game():
                     mouse_x, mouse_y = pygame.mouse.get_pos()
                     for obj in objects[:]:
                         if is_click_on_sprite(mouse_x, mouse_y, int(obj.x), int(obj.y), sprite_mask):
-                        #distance = ((mouse_x - obj.x)**2 + (mouse_y - obj.y)**2)**0.5
-                        #if distance <= object_radius:
                             time_elapsed = current_time - obj.timestamp
                             score_increment = int(obj.end_score + (obj.start_score - obj.end_score) * ((obj.total_time - time_elapsed) / obj.total_time))
                             score += score_increment
                             objects.remove(obj)
                             # Add score popup to array
                             score_popups.append({"score": score_increment, "x": mouse_x, "y": mouse_y, "timestamp": current_time})
-                        #flying_object_pixels.close()
             
             
             # Move and draw the objects
             for obj in objects:
                 obj.update(dt)
                 obj.draw(screen, const.DEFAULT_FONT, current_time)  # Pass the font and current time
+
+            for plane in planes:
+                plane.update(dt)
+                plane.draw(screen, const.DEFAULT_FONT, current_time)  # Pass the font and current time
 
             score_text = const.DEFAULT_FONT.render(f"Score: {int(score)}", True, const.WHITE)
             screen.blit(score_text, (10, 10))  # Display the text at (10, 10)
@@ -170,7 +179,7 @@ def start_game():
             # Remove objects that have left the screen
             objects = [obj for obj in objects if obj.x >= -50 and obj.x <= const.screen_width + 50 and obj.y >= -50 and obj.y <= const.screen_height + 50]
 
-            # Spawn a new object if fewer than 3 are present
+            # Spawn a new object if fewer than 4 are present
             if len(objects) < 4 and current_time >= next_spawn_time:
                 objects.append(spawn_object())
                 next_spawn_time = current_time + random.uniform(0.1, 0.7)

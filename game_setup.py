@@ -28,12 +28,20 @@ try:
         pygame.image.load("./img/bg1920x1080.jpg").convert_alpha()
     ]
     background_image = pygame.transform.scale(background_images[0], (const.screen_width, const.screen_height))
+    
     # flying objects
     FLYING_OBJECT = pygame.image.load("img/cyber.png") 
     new_width = int(FLYING_OBJECT.get_width() * const.scale_flying_object)
     new_height = int(FLYING_OBJECT.get_height() * const.scale_flying_object)
     FLYING_OBJECT = pygame.transform.scale(FLYING_OBJECT, (new_width, new_height))
     sprite_mask = pygame.mask.from_surface(FLYING_OBJECT)
+    
+    #plane
+    PLANE = pygame.image.load("img/plane.png")
+    new_width = int(PLANE.get_width() * const.scale_plane)
+    new_height = int(PLANE.get_height() * const.scale_plane)
+    PLANE = pygame.transform.scale(PLANE, (new_width, new_height))
+    plane_mask = pygame.mask.from_surface(PLANE)
     # print mask. Just to check that masking works. Will not be visible when we add background on top of it.
     for x in range(sprite_mask.get_size()[0]):
         for y in range(sprite_mask.get_size()[1]):
