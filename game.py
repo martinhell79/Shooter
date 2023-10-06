@@ -3,61 +3,28 @@ import random
 import time
 import constants as const
 import highscores as hs
-from game_object import FlyingObject, NonFlyingObject
-import math
+from game_object import FlyingObject
 from math import radians, cos, sin
+import game_setup
 
 
 # Init game variables
-GameState = {
-    "Playing": 0,
-    "Game Over": 1,
-    "Highscore Entry": 2,
-}
+GAME_STATE = game_setup.GameState
 
-pygame.init() # Initialize Pygame
-screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN) # Create the screen in fullscreen mode
-const.screen_width, const.screen_height = screen.get_size() # Retrieve the actual screen dimensions
-pygame.font.init() # Initialize Font
-DEFAULT_FONT = pygame.font.SysFont(None, const.screen_width//50)  # Scale font size to screen size. (Avoid tiny text on 4k)
-
-# Colors
-WHITE = (255, 255, 255)
-BLACK = (0, 0, 0)
-YELLOW = (255, 255, 0)
-
-TRANSPARENT = (0, 0, 0, 0)
+# pygame.init() # Initialize Pygame
+screen = game_setup.screen
 
 remaining_time = const.TIME_LIMIT  # 30 seconds
-start_time = pygame.time.get_ticks()
-
-pygame.display.set_caption('Point and Click Shooting Game') # Window title
-
-# Load all images
-try:
-    background_images = [
-        pygame.image.load("./img/bg1920x1080.jpg").convert_alpha()
-    ]
-    background_image = pygame.transform.scale(background_images[0], (const.screen_width, const.screen_height))
-    # flying objects
-    flying_object = pygame.image.load("img/cyber.png") 
-    new_width = int(flying_object.get_width() * const.scale_flying_object)
-    new_height = int(flying_object.get_height() * const.scale_flying_object)
-    flying_object = pygame.transform.scale(flying_object, (new_width, new_height))
-    sprite_mask = pygame.mask.from_surface(flying_object)
-    # print mask. Just to check that masking works. Will not be visible when we add background on top of it.
-    for x in range(sprite_mask.get_size()[0]):
-        for y in range(sprite_mask.get_size()[1]):
-            if sprite_mask.get_at((x, y)):
-                pygame.draw.rect(screen, WHITE, (x, y, 1, 1))  # Draw a pixel
-    crosshair_image = pygame.image.load("img/crosshair.png")
-    crosshair_image = pygame.transform.scale(crosshair_image, (50, 50))
-    # Define the hotspot coordinates (center of the crosshair)
-    hotspot = (crosshair_image.get_width() // 2, crosshair_image.get_height() // 2)
+start_time = game_setup.start_time
 
 
-except pygame.error:
-    print("Error loading the background or flying object image.")
+# Import images
+
+background_image = game_setup.background_image
+flying_object = game_setup.FLYING_OBJECT
+sprite_mask = game_setup.sprite_mask
+crosshair_image = game_setup.crosshair_image
+hotspot = game_setup.hotspot
 
 '''
 #function to update background image
@@ -73,7 +40,7 @@ def change_background(score):
 def popup_hitscore(score, x, y):
     # Create a text surface with a transparent background
     font = pygame.font.Font(None, 48)
-    text = font.render(str(score), True, YELLOW, TRANSPARENT)
+    text = font.render(str(score), True, const.YELLOW, const.TRANSPARENT)
 
     # Get the text rect to position it
     text_rect = text.get_rect()
@@ -130,11 +97,11 @@ def start_game():
     last_time = time.time()
 
     # Main game loop
-    currentstate = GameState['Playing'];
+    currentstate = GAME_STATE['Playing'];
     running = True
     while running:
-        if (currentstate == GameState['Playing']):
-            screen.fill(WHITE) # take this away?
+        if (currentstate == GAME_STATE['Playing']):
+            screen.fill(const.WHITE) # take this away?
             # Set the mouse cursor to the crosshair image
             pygame.mouse.set_visible(False)
             mouse_x, mouse_y = pygame.mouse.get_pos()
@@ -155,7 +122,7 @@ def start_game():
             screen.blit(background_image, (0, 0))
 
             if remaining_time == 0:
-                currentstate = GameState['Game Over'];
+                currentstate = GAME_STATE['Game Over'];
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
@@ -180,12 +147,12 @@ def start_game():
             # Move and draw the objects
             for obj in objects:
                 obj.update(dt)
-                obj.draw(screen, DEFAULT_FONT, current_time)  # Pass the font and current time
+                obj.draw(screen, const.DEFAULT_FONT, current_time)  # Pass the font and current time
 
-            score_text = DEFAULT_FONT.render(f"Score: {int(score)}", True, WHITE)
+            score_text = const.DEFAULT_FONT.render(f"Score: {int(score)}", True, const.WHITE)
             screen.blit(score_text, (10, 10))  # Display the text at (10, 10)
             #update timer
-            timer_text = DEFAULT_FONT.render(f"Time: {remaining_time}", True, WHITE)
+            timer_text = const.DEFAULT_FONT.render(f"Time: {remaining_time}", True, const.WHITE)
             screen.blit(timer_text, (const.screen_width//2.2, 10))  # Display the timer at (10, 10) on the screen
             
             # Render individual score popups after a hit
@@ -209,22 +176,22 @@ def start_game():
                 next_spawn_time = current_time + random.uniform(0.1, 0.7)
             pygame.display.flip()  # Update the display
 
-        elif (currentstate == GameState['Game Over']):
+        elif (currentstate == GAME_STATE['Game Over']):
             hs.load_highscores()
             hs.update_highscores(score)
-            currentstate = GameState['Highscore Entry']
+            currentstate = GAME_STATE['Highscore Entry']
 
-        elif (currentstate == GameState['Highscore Entry']):
+        elif (currentstate == GAME_STATE['Highscore Entry']):
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
                 elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
                         running = False
-            screen.fill(BLACK)  # Clear the screen
+            screen.fill(const.BLACK)  # Clear the screen
             #pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW) # get normal cursor
             pygame.mouse.set_visible(True)
-            final_score_text = DEFAULT_FONT.render(f"Final Score: {int(score)}", True, WHITE)
+            final_score_text = const.DEFAULT_FONT.render(f"Final Score: {int(score)}", True, const.WHITE)
             screen.blit(final_score_text, (const.screen_width // 6 , const.screen_height // 2 - 50))
             hs.display_highscores(pygame, screen, const.screen_width, const.screen_height)
             pygame.display.flip()  # Update the display
