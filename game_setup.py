@@ -18,7 +18,6 @@ const.DEFAULT_FONT = pygame.font.SysFont(None, const.screen_width//50)  # Scale 
 
 TRANSPARENT = (0, 0, 0, 0)
 
-remaining_time = const.TIME_LIMIT  # 30 seconds
 start_time = pygame.time.get_ticks()
 
 pygame.display.set_caption('Point and Click Shooting Game') # Window title
