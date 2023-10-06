@@ -19,8 +19,7 @@ pygame.init() # Initialize Pygame
 screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN) # Create the screen in fullscreen mode
 const.screen_width, const.screen_height = screen.get_size() # Retrieve the actual screen dimensions
 pygame.font.init() # Initialize Font
-font = pygame.font.SysFont(None, 36)  # Default font, size 36
-
+DEFAULT_FONT = pygame.font.SysFont(None, const.screen_width//50)  # Scale font size to screen size. (Avoid tiny text on 4k)
 
 
 remaining_time = const.TIME_LIMIT  # 30 seconds
@@ -173,13 +172,13 @@ while running:
         # Move and draw the objects
         for obj in objects:
             obj.update(dt)
-            obj.draw(screen, font, current_time)  # Pass the font and current time
+            obj.draw(screen, DEFAULT_FONT, current_time)  # Pass the font and current time
 
-        score_text = font.render(f"Score: {int(score)}", True, (255, 255, 255))  # RGB color for white
+        score_text = DEFAULT_FONT.render(f"Score: {int(score)}", True, (255, 255, 255))  # RGB color for white
         screen.blit(score_text, (10, 10))  # Display the text at (10, 10)
         #update timer
-        timer_text = font.render(f"Time: {remaining_time}", True, (0, 0, 0))
-        screen.blit(timer_text, (const.screen_width-100, 10))  # Display the timer at (10, 10) on the screen
+        timer_text = DEFAULT_FONT.render(f"Time: {remaining_time}", True, (255, 255, 255))
+        screen.blit(timer_text, (const.screen_width//2.2, 10))  # Display the timer at (10, 10) on the screen
         
         # Render individual score popups after a hit
         for popup in score_popups[:]:
@@ -217,7 +216,7 @@ while running:
         screen.fill((0, 0, 0))  # Clear the screen
         #pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW) # get normal cursor
         pygame.mouse.set_visible(True)
-        final_score_text = font.render(f"Final Score: {int(score)}", True, (255, 255, 255))
+        final_score_text = DEFAULT_FONT.render(f"Final Score: {int(score)}", True, (255, 255, 255))
         screen.blit(final_score_text, (const.screen_width // 6 , const.screen_height // 2 - 50))
         hs.display_highscores(pygame, screen, const.screen_width, const.screen_height)
         pygame.display.flip()  # Update the display
