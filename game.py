@@ -19,9 +19,14 @@ pygame.init() # Initialize Pygame
 screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN) # Create the screen in fullscreen mode
 const.screen_width, const.screen_height = screen.get_size() # Retrieve the actual screen dimensions
 pygame.font.init() # Initialize Font
-font = pygame.font.SysFont(None, 36)  # Default font, size 36
+DEFAULT_FONT = pygame.font.SysFont(None, const.screen_width//50)  # Scale font size to screen size. (Avoid tiny text on 4k)
 
+# Colors
+WHITE = (255, 255, 255)
+BLACK = (0, 0, 0)
+YELLOW = (255, 255, 0)
 
+TRANSPARENT = (0, 0, 0, 0)
 
 remaining_time = const.TIME_LIMIT  # 30 seconds
 start_time = pygame.time.get_ticks()
@@ -44,7 +49,7 @@ try:
     for x in range(sprite_mask.get_size()[0]):
         for y in range(sprite_mask.get_size()[1]):
             if sprite_mask.get_at((x, y)):
-                pygame.draw.rect(screen, (255, 255, 255), (x, y, 1, 1))  # Draw a red pixel
+                pygame.draw.rect(screen, WHITE, (x, y, 1, 1))  # Draw a pixel
     crosshair_image = pygame.image.load("img/crosshair.png")
     crosshair_image = pygame.transform.scale(crosshair_image, (50, 50))
     # Define the hotspot coordinates (center of the crosshair)
@@ -68,7 +73,7 @@ def change_background(score):
 def popup_hitscore(score, x, y):
     # Create a text surface with a transparent background
     font = pygame.font.Font(None, 48)
-    text = font.render(str(score), True, (255, 255, 255), (0, 0, 0, 0))  # (0, 0, 0, 0) is transparent
+    text = font.render(str(score), True, YELLOW, TRANSPARENT)
 
     # Get the text rect to position it
     text_rect = text.get_rect()
@@ -114,117 +119,124 @@ def spawn_object():
     return FlyingObject(initial_x, initial_y, flying_object, velocity, speed)
 
 
-#Gameplay variables
-objects = [spawn_object() for _ in range(4)] # Initialize the first object and object list
-next_spawn_time = time.time() + random.uniform(0.1, 0.7) # Timer to control the spawning of new objects
-score = 0 # Initialize score
-score_popups = [] # Add a list to store individual score pop-ups
 
-last_time = time.time()
+def start_game():
+    #Gameplay variables
+    objects = [spawn_object() for _ in range(4)] # Initialize the first object and object list
+    next_spawn_time = time.time() + random.uniform(0.1, 0.7) # Timer to control the spawning of new objects
+    score = 0 # Initialize score
+    score_popups = [] # Add a list to store individual score pop-ups
 
-# Main game loop
-currentstate = GameState['Playing'];
-running = True
-while running:
-    if (currentstate == GameState['Playing']):
-        screen.fill((255, 255, 255)) # take this away?
-        # Set the mouse cursor to the crosshair image
-        pygame.mouse.set_visible(False)
-        mouse_x, mouse_y = pygame.mouse.get_pos()
-        screen.blit(crosshair_image, (mouse_x - crosshair_image.get_width() / 2, mouse_y - crosshair_image.get_height() / 2))
+    last_time = time.time()
+
+    # Main game loop
+    currentstate = GameState['Playing'];
+    running = True
+    while running:
+        if (currentstate == GameState['Playing']):
+            screen.fill(WHITE) # take this away?
+            # Set the mouse cursor to the crosshair image
+            pygame.mouse.set_visible(False)
+            mouse_x, mouse_y = pygame.mouse.get_pos()
+            screen.blit(crosshair_image, (mouse_x - crosshair_image.get_width() / 2, mouse_y - crosshair_image.get_height() / 2))
 
 
-        current_time = time.time()
-        dt = current_time - last_time
-        last_time = current_time
+            current_time = time.time()
+            dt = current_time - last_time
+            last_time = current_time
 
-        c_time = pygame.time.get_ticks()
-        elapsed_time = (c_time - start_time) // 1000  # Convert milliseconds to seconds
-        remaining_time = max(0, const.TIME_LIMIT - elapsed_time)  # Ensure remaining_time doesn't go below 0
-        
-        # Draw the background image
-        #background_image = change_background(score)
-        
-        screen.blit(background_image, (0, 0))
+            c_time = pygame.time.get_ticks()
+            elapsed_time = (c_time - start_time) // 1000  # Convert milliseconds to seconds
+            remaining_time = max(0, const.TIME_LIMIT - elapsed_time)  # Ensure remaining_time doesn't go below 0
+            
+            # Draw the background image
+            #background_image = change_background(score)
+            
+            screen.blit(background_image, (0, 0))
 
-        if remaining_time == 0:
-            currentstate = GameState['Game Over'];
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
+            if remaining_time == 0:
+                currentstate = GameState['Game Over'];
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
                     running = False
-            elif event.type == pygame.MOUSEBUTTONDOWN:
-                mouse_x, mouse_y = pygame.mouse.get_pos()
-                for obj in objects[:]:
-                    if is_click_on_sprite(mouse_x, mouse_y, int(obj.x), int(obj.y), sprite_mask):
-                    #distance = ((mouse_x - obj.x)**2 + (mouse_y - obj.y)**2)**0.5
-                    #if distance <= object_radius:
-                        time_elapsed = current_time - obj.timestamp
-                        score_increment = int(obj.end_score + (obj.start_score - obj.end_score) * ((obj.total_time - time_elapsed) / obj.total_time))
-                        score += score_increment
-                        objects.remove(obj)
-                        # Add score popup to array
-                        score_popups.append({"score": score_increment, "x": mouse_x, "y": mouse_y, "timestamp": current_time})
-                    #flying_object_pixels.close()
+                elif event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_ESCAPE:
+                        running = False
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    mouse_x, mouse_y = pygame.mouse.get_pos()
+                    for obj in objects[:]:
+                        if is_click_on_sprite(mouse_x, mouse_y, int(obj.x), int(obj.y), sprite_mask):
+                        #distance = ((mouse_x - obj.x)**2 + (mouse_y - obj.y)**2)**0.5
+                        #if distance <= object_radius:
+                            time_elapsed = current_time - obj.timestamp
+                            score_increment = int(obj.end_score + (obj.start_score - obj.end_score) * ((obj.total_time - time_elapsed) / obj.total_time))
+                            score += score_increment
+                            objects.remove(obj)
+                            # Add score popup to array
+                            score_popups.append({"score": score_increment, "x": mouse_x, "y": mouse_y, "timestamp": current_time})
+                        #flying_object_pixels.close()
+            
+            
+            # Move and draw the objects
+            for obj in objects:
+                obj.update(dt)
+                obj.draw(screen, DEFAULT_FONT, current_time)  # Pass the font and current time
+
+            score_text = DEFAULT_FONT.render(f"Score: {int(score)}", True, WHITE)
+            screen.blit(score_text, (10, 10))  # Display the text at (10, 10)
+            #update timer
+            timer_text = DEFAULT_FONT.render(f"Time: {remaining_time}", True, WHITE)
+            screen.blit(timer_text, (const.screen_width//2.2, 10))  # Display the timer at (10, 10) on the screen
+            
+            # Render individual score popups after a hit
+            for popup in score_popups[:]:
+                elapsed_time = current_time - popup["timestamp"]
+                if elapsed_time > 1:  # Display popup for 1 second
+                    score_popups.remove(popup)
+                    continue
+                popup_hitscore(int(popup['score']), popup['x'], popup['y'])
+
+            # replace cursor with crosshair
+            mouse_x, mouse_y = pygame.mouse.get_pos()
+            screen.blit(crosshair_image, (mouse_x - crosshair_image.get_width() / 2, mouse_y - crosshair_image.get_height() / 2))
         
-        
-        # Move and draw the objects
-        for obj in objects:
-            obj.update(dt)
-            obj.draw(screen, font, current_time)  # Pass the font and current time
+            # Remove objects that have left the screen
+            objects = [obj for obj in objects if obj.x >= -50 and obj.x <= const.screen_width + 50 and obj.y >= -50 and obj.y <= const.screen_height + 50]
 
-        score_text = font.render(f"Score: {int(score)}", True, (255, 255, 255))  # RGB color for white
-        screen.blit(score_text, (10, 10))  # Display the text at (10, 10)
-        #update timer
-        timer_text = font.render(f"Time: {remaining_time}", True, (0, 0, 0))
-        screen.blit(timer_text, (const.screen_width-100, 10))  # Display the timer at (10, 10) on the screen
-        
-        # Render individual score popups after a hit
-        for popup in score_popups[:]:
-            elapsed_time = current_time - popup["timestamp"]
-            if elapsed_time > 1:  # Display popup for 1 second
-                score_popups.remove(popup)
-                continue
-            popup_hitscore(int(popup['score']), popup['x'], popup['y'])
+            # Spawn a new object if fewer than 3 are present
+            if len(objects) < 4 and current_time >= next_spawn_time:
+                objects.append(spawn_object())
+                next_spawn_time = current_time + random.uniform(0.1, 0.7)
+            pygame.display.flip()  # Update the display
 
-        # replace cursor with crosshair
-        mouse_x, mouse_y = pygame.mouse.get_pos()
-        screen.blit(crosshair_image, (mouse_x - crosshair_image.get_width() / 2, mouse_y - crosshair_image.get_height() / 2))
-    
-        # Remove objects that have left the screen
-        objects = [obj for obj in objects if obj.x >= -50 and obj.x <= const.screen_width + 50 and obj.y >= -50 and obj.y <= const.screen_height + 50]
+        elif (currentstate == GameState['Game Over']):
+            hs.load_highscores()
+            hs.update_highscores(score)
+            currentstate = GameState['Highscore Entry']
 
-        # Spawn a new object if fewer than 3 are present
-        if len(objects) < 4 and current_time >= next_spawn_time:
-            objects.append(spawn_object())
-            next_spawn_time = current_time + random.uniform(0.1, 0.7)
-        pygame.display.flip()  # Update the display
-
-    elif (currentstate == GameState['Game Over']):
-        hs.load_highscores()
-        hs.update_highscores(score)
-        currentstate = GameState['Highscore Entry']
-
-    elif (currentstate == GameState['Highscore Entry']):
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
+        elif (currentstate == GameState['Highscore Entry']):
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
                     running = False
-        screen.fill((0, 0, 0))  # Clear the screen
-        #pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW) # get normal cursor
-        pygame.mouse.set_visible(True)
-        final_score_text = font.render(f"Final Score: {int(score)}", True, (255, 255, 255))
-        screen.blit(final_score_text, (const.screen_width // 6 , const.screen_height // 2 - 50))
-        hs.display_highscores(pygame, screen, const.screen_width, const.screen_height)
-        pygame.display.flip()  # Update the display
-    
+                elif event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_ESCAPE:
+                        running = False
+            screen.fill(BLACK)  # Clear the screen
+            #pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW) # get normal cursor
+            pygame.mouse.set_visible(True)
+            final_score_text = DEFAULT_FONT.render(f"Final Score: {int(score)}", True, WHITE)
+            screen.blit(final_score_text, (const.screen_width // 6 , const.screen_height // 2 - 50))
+            hs.display_highscores(pygame, screen, const.screen_width, const.screen_height)
+            pygame.display.flip()  # Update the display
+        
 
-# Print final score (You can also display this on the screen later)
-print(f"Final Score: {score}")
+    # Print final score (You can also display this on the screen later)
+    print(f"Final Score: {score}")
 
-# Quit Pygame
-pygame.quit()
+    # Quit Pygame
+    pygame.quit()
+
+
+
+if __name__ == "__main__":
+    start_game()
