@@ -24,7 +24,7 @@ plane_r = game_setup.PLANE_R
 def start_game(time_limit=30):
     #Gameplay variables
     remaining_time = time_limit
-    planes = [spawn_plane('right') for _ in range(1)] # Lets start with one plane
+    planes = [spawn.spawn_plane('right') for _ in range(1)] # Lets start with one plane
     objects = [spawn.spawn_object() for _ in range(4)] # Initialize the first object and object list
     next_spawn_time = time.time() + random.uniform(0.1, 0.7) # Timer to control the spawning of new objects
     score = 0 # Initialize score
@@ -72,7 +72,7 @@ def start_game(time_limit=30):
                 next_spawn_time = current_time + random.uniform(0.1, 0.7)
 
             if len(planes) < 1:
-                planes.append(spawn_plane('left'))
+                planes.append(spawn.spawn_plane('left'))
 
             pygame.display.flip()  # Update the display
 

@@ -5,7 +5,8 @@ import constants as const
 import game_setup
 
 flying_object = game_setup.FLYING_OBJECT
-plane = game_setup.PLANE
+plane_l = game_setup.PLANE_L
+plane_r = game_setup.PLANE_R
 
 # spawn new object that flies in a straight line across the screen. Apply some restrictions so that they actually cross the full screen.
 def spawn_object():
@@ -33,8 +34,17 @@ def spawn_object():
     return FlyingObject(initial_x, initial_y, flying_object, velocity, speed)
 
 #spawn new plane that flies on a static path across the screen.
-def spawn_plane():
+def spawn_plane(direction):
     speed = random.uniform(const.MIN_SPEED_PLANE, const.MAX_SPEED_PLANE)
-    angle = radians(195)
+    if direction == 'left':
+        angle = radians(195)
+        plane = plane_l
+        start_x = const.screen_width+50
+        start_y = random.randint(int(0.05 * const.screen_height), int(0.80 * const.screen_height))
+    elif direction =='right':
+        angle = radians(345)
+        plane = plane_r
+        start_x = -50
+        start_y = random.randint(int(0.05 * const.screen_height), int(0.80 * const.screen_height))
     velocity = [speed * cos(angle), -speed * sin(angle)] 
-    return FlyingObject(const.screen_width, int(0.15 * const.screen_height), plane, velocity, speed)
+    return FlyingObject(start_x, start_y, plane, velocity, speed)
