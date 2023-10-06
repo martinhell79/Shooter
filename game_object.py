@@ -1,6 +1,9 @@
 import time
 import constants as const
 
+# Colors
+WHITE = (255, 255, 255)
+
 class BaseObject:
     def __init__(self, x, y, image=None):
         self.x = x
@@ -51,7 +54,7 @@ class FlyingObject(BaseObject):
         screen.blit(self.image, (int(self.x), int(self.y)))
         #Compute and display current score for object
         current_score = self.end_score + (self.start_score - self.end_score) * (1 - (time_elapsed / self.total_time))
-        score_text = font.render(f"{int(current_score)}", True, (255, 255, 255))
+        score_text = font.render(f"{int(current_score)}", True, WHITE)
         screen.blit(score_text, (int(self.x) - 25, int(self.y)))
 
     def update(self, dt):
