@@ -3,7 +3,7 @@ import random
 import time
 import constants as const
 import highscores as hs
-from game_object import FlyingObject
+from game_object import FlyingObject, AnimationObject
 from math import radians, cos, sin
 import game_setup
 
@@ -101,6 +101,7 @@ def start_game():
     next_spawn_time = time.time() + random.uniform(0.1, 0.7) # Timer to control the spawning of new objects
     score = 0 # Initialize score
     score_popups = [] # Add a list to store individual score pop-ups
+    explosions = []
 
     last_time = time.time()
 
@@ -147,6 +148,9 @@ def start_game():
                             objects.remove(obj)
                             # Add score popup to array
                             score_popups.append({"score": score_increment, "x": mouse_x, "y": mouse_y, "timestamp": current_time})
+                            # Animate explosion
+                            explosions.append(AnimationObject(obj.x, obj.y, game_setup.VFX_EXPLOSION, x_offset=game_setup.FLYING_OBJECT_WIDTH//30, y_offset=game_setup.FLYING_OBJECT_HEIGHT//3))
+                        #flying_object_pixels.close()
             
             
             # Move and draw the objects
@@ -171,6 +175,16 @@ def start_game():
                     score_popups.remove(popup)
                     continue
                 popup_hitscore(int(popup['score']), popup['x'], popup['y'])
+
+            remaining_explosions = []
+            for explosion in explosions:
+                done = explosion.draw(screen)
+                if not done:
+                    remaining_explosions.append(explosion)
+
+            explosion = remaining_explosions
+
+
 
             # replace cursor with crosshair
             mouse_x, mouse_y = pygame.mouse.get_pos()
