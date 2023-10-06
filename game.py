@@ -175,7 +175,7 @@ while running:
             obj.update(dt)
             obj.draw(screen, font, current_time)  # Pass the font and current time
 
-        score_text = font.render(f"Score: {int(score)}", True, (0, 0, 0))  # RGB color for white
+        score_text = font.render(f"Score: {int(score)}", True, (255, 255, 255))  # RGB color for white
         screen.blit(score_text, (10, 10))  # Display the text at (10, 10)
         #update timer
         timer_text = font.render(f"Time: {remaining_time}", True, (0, 0, 0))
