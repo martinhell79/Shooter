@@ -1,6 +1,8 @@
 import constants as const
 import game_setup
 import pygame
+import start_screen as ss
+
 import highscores as hs
 
 SCREEN = game_setup.screen
@@ -75,3 +77,23 @@ def render_animations(animations):
             remaining_animations.append(animation)
     
     return remaining_animations
+
+def render_start_screen():
+    base_font = pygame.font.Font(None, 48)
+    name_rect_color = pygame.Color('purple')
+
+    SCREEN.fill((0,0,0))
+
+    pygame.draw.rect(SCREEN,name_rect_color,ss.name_rect,5)
+    text_surface = base_font.render(game_setup.user_name, True, (255,255,255))
+    
+    
+    SCREEN.blit(text_surface,(ss.name_rect.x + 5, ss.name_rect.y +5))
+
+    ss.name_rect.w = max(500, text_surface.get_width() + 5)
+
+
+
+
+
+

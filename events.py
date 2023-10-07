@@ -3,38 +3,10 @@ import pygame
 from game_object import AnimationObject
 import constants as const
 import render
+import start_screen as ss
 
 SCREEN = game_setup.screen
 
-
-#SPRITE_MASK = game_setup.sprite_mask
-#PLANE_L_MASK = game_setup.plane_l_mask
-#PLANE_R_MASK = game_setup.plane_r_mask
-
-
-'''
-def is_click_on_sprite(mouse_x, mouse_y, sprite_x, sprite_y):
-    # Calculate the local coordinates within the sprite
-    local_x, local_y = mouse_x - sprite_x, mouse_y - sprite_y
-    
-    # Check if the local coordinates are within the sprite's dimensions for flying object
-    if 0 <= local_x < SPRITE_MASK.get_size()[0] and 0 <= local_y < SPRITE_MASK.get_size()[1]:
-        # Check if the corresponding pixel in the mask is set (collision)
-        if SPRITE_MASK.get_at((local_x, local_y)):
-            return 'flying_object'
-    # Check if the local coordinates are within the sprite's dimensions for left going plane
-    if 0 <= local_x < PLANE_L_MASK.get_size()[0] and 0 <= local_y < PLANE_L_MASK.get_size()[1]:
-        # Check if the corresponding pixel in the mask is set (collision)
-        if PLANE_L_MASK.get_at((local_x, local_y)):
-            return 'plane'
-    # Check if the local coordinates are within the sprite's dimensions for right going plane
-    if 0 <= local_x < PLANE_R_MASK.get_size()[0] and 0 <= local_y < PLANE_R_MASK.get_size()[1]:
-        # Check if the corresponding pixel in the mask is set (collision)
-        if PLANE_R_MASK.get_at((local_x, local_y)):
-            return 'plane'
-
-    return False
-'''
 def is_click_on_sprite(mouse_x, mouse_y, sprite_x, sprite_y, image):
     mask = pygame.mask.from_surface(image)
     # Calculate the local coordinates within the sprite
@@ -45,7 +17,6 @@ def is_click_on_sprite(mouse_x, mouse_y, sprite_x, sprite_y, image):
         # Check if the corresponding pixel in the mask is set (collision)
         if mask.get_at((local_x, local_y)):
             return 1
-
     return False
 
 def consume_events(score, objects, planes, score_popups, explosions, laser_shots, current_time):
@@ -80,5 +51,24 @@ def consume_events(score, objects, planes, score_popups, explosions, laser_shots
                     score_popups.append({"score": score_increment, "x": mouse_x, "y": mouse_y, "timestamp": current_time})
                     # Animate explosion (same for all planes currently)
                     explosions.append(AnimationObject(pl.x, pl.y, game_setup.VFX_EXPLOSION, x_offset=game_setup.PLANE_L_WIDTH//5, y_offset=game_setup.PLANE_L_HEIGHT))
-
     return running, score
+
+def startScreenEvents():
+    running = True
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_ESCAPE:
+                running = False
+            if event.key == pygame.K_BACKSPACE:
+                game_setup.user_name = game_setup.user_name[:-1]
+            else:
+                game_setup.user_name += event.unicode
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            if ss.name_rect.collidepoint(event.pos):
+                # Handle the Start button click
+                print("Start button clicked!")
+                print(f"Name: {game_setup.user_name}")
+                print(f"Email: {game_setup.user_name}")
+    return running

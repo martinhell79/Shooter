@@ -5,9 +5,10 @@ import os
 
 # Init game variables
 GameState = {
-    "Playing": 0,
-    "Game Over": 1,
-    "Highscore Entry": 2,
+    "Start_Screen": 0,
+    "Playing": 1,
+    "Game_Over": 2,
+    "Highscore_Entry": 3,
 }
 
 pygame.init() # Initialize Pygame
@@ -21,6 +22,9 @@ TRANSPARENT = (0, 0, 0, 0)
 start_time = pygame.time.get_ticks()
 
 pygame.display.set_caption('Point and Click Shooting Game') # Window title
+
+#name and email for players
+user_name = ''
 
 def import_animation(vfx_dir):
     vfx_frames = []
