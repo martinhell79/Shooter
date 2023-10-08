@@ -60,7 +60,11 @@ def startScreenEvents():
             running = False
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
-                running = False
+                return False
+            if event.key == pygame.K_RETURN:
+                game_setup.CurrentState = game_setup.GameState['Playing']
+                print('return pressed')
+                return True
             if event.key == pygame.K_BACKSPACE:
                 game_setup.user_name = game_setup.user_name[:-1]
             else:

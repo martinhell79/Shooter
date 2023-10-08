@@ -10,6 +10,8 @@ GameState = {
     "Game_Over": 2,
     "Highscore_Entry": 3,
 }
+CurrentState = 'Start_Screen'
+
 
 pygame.init() # Initialize Pygame
 screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN) # Create the screen in fullscreen mode

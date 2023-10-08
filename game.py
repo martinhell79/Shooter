@@ -33,17 +33,16 @@ def start_game(time_limit=30):
     laser_shots = []
 
     last_time = time.time()
-
     # Main game loop
-    currentstate = GAME_STATE['Playing'];
+    game_setup.CurrentState = GAME_STATE['Start_Screen'];
     running = True
     while running:
-        if (currentstate == GAME_STATE['Start_Screen']):
+        if (game_setup.CurrentState == GAME_STATE['Start_Screen']):
             render.render_start_screen()
             running = events.startScreenEvents()
             pygame.display.flip()
 
-        if (currentstate == GAME_STATE['Playing']):
+        if (game_setup.CurrentState == GAME_STATE['Playing']):
             SCREEN.blit(background_image, (0, 0))
             render.render_cursor(crosshair_image)
 
@@ -54,7 +53,7 @@ def start_game(time_limit=30):
             elapsed_time = (c_time - start_time) // 1000  # Convert milliseconds to seconds
             remaining_time = max(0, time_limit - elapsed_time)  # Ensure remaining_time doesn't go below 0
             if remaining_time == 0:
-                currentstate = GAME_STATE['Game_Over']
+                game_setup.CurrentState = GAME_STATE['Game_Over']
             
             running, score = events.consume_events(score, objects, planes, score_popups, explosions, laser_shots, current_time)
             
@@ -82,12 +81,12 @@ def start_game(time_limit=30):
 
             pygame.display.flip()  # Update the display
 
-        elif (currentstate == GAME_STATE['Game_Over']):
+        elif (game_setup.CurrentState == GAME_STATE['Game_Over']):
             hs.load_highscores()
             hs.update_highscores(score)
-            currentstate = GAME_STATE['Highscore_Entry']
+            game_setup.CurrentState = GAME_STATE['Highscore_Entry']
 
-        elif (currentstate == GAME_STATE['Highscore_Entry']):
+        elif (game_setup.CurrentState == GAME_STATE['Highscore_Entry']):
             running = render.render_highscore_page(score)
         
 
