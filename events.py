@@ -65,11 +65,17 @@ def startScreenEvents():
                 game_setup.CurrentState = game_setup.GameState['Playing']
                 return True
             elif event.key == pygame.K_BACKSPACE:
-                game_setup.user_name = game_setup.user_name[:-1]
+                ss.eraseActiveString()
             elif 32 <= event.key <= 126: #accept printable characters as input
-                game_setup.user_name += event.unicode
+                ss.appendActiveString(event.unicode)
         elif event.type == pygame.MOUSEBUTTONDOWN:
             if ss.name_rect.collidepoint(event.pos):
+                ss.email_rect_active = False
+                ss.name_rect_active = True
+            elif ss.email_rect.collidepoint(event.pos):
+                ss.name_rect_active = False
+                ss.email_rect_active = True
+                
                 # Handle the Start button click
                 print("Start button clicked!")
                 print(f"Name: {game_setup.user_name}")

@@ -79,19 +79,41 @@ def render_animations(animations):
     return remaining_animations
 
 def render_start_screen():
+    SCREEN.blit(game_setup.ss_background_image, (0, 0))
+
     base_font = pygame.font.Font(None, 48)
-    name_rect_color = pygame.Color('purple')
+    text_rect_color_inactive = pygame.Color('gray78')
+    text_rect_color_active = pygame.Color('whitesmoke')
+    text_color = pygame.Color('orchid3')
+    text_fill_color = pygame.Color('gray80')
 
-    SCREEN.fill((0,0,0))
 
-    pygame.draw.rect(SCREEN,name_rect_color,ss.name_rect,5)
-    text_surface = base_font.render(game_setup.user_name, True, (255,255,255))
+    #SCREEN.fill((0,0,0))
+
+    #Name box
+    #pygame.draw.rect(SCREEN,text_fill_color,ss.name_rect) #ractangle background
+    if ss.name_rect_active:
+        pygame.draw.rect(SCREEN,text_rect_color_active,ss.name_rect,5)
+    else:
+        pygame.draw.rect(SCREEN,text_rect_color_inactive,ss.name_rect,1)
+    text_surface = base_font.render(game_setup.user_name, True, text_color)
+    SCREEN.blit(text_surface,(ss.name_rect.x + 10, ss.name_rect.y + 10))
+    ss.name_rect.w = max(500, text_surface.get_width() + 20)
+    #Name string relative to box
+    nametext = base_font.render('Name:', True, (255, 255, 255))
+    SCREEN.blit(nametext, (ss.name_rect_x - 110, ss.name_rect_y+10))
     
-    
-    SCREEN.blit(text_surface,(ss.name_rect.x + 5, ss.name_rect.y +5))
-
-    ss.name_rect.w = max(500, text_surface.get_width() + 5)
-
+    #Email box
+    if ss.email_rect_active:
+        pygame.draw.rect(SCREEN,text_rect_color_active,ss.email_rect,5)
+    else:
+        pygame.draw.rect(SCREEN,text_rect_color_inactive,ss.email_rect,1)
+    text_surface = base_font.render(game_setup.user_email, True, text_color)
+    SCREEN.blit(text_surface,(ss.email_rect.x + 10, ss.email_rect.y + 10))
+    ss.email_rect.w = max(500, text_surface.get_width() + 20)
+    # Email string relative to box
+    emailtext = base_font.render('Email:', True, (255, 255, 255))
+    SCREEN.blit(emailtext, (ss.email_rect_x - 110, ss.email_rect_y+10))
 
 
 

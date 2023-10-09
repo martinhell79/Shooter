@@ -33,6 +33,7 @@ pygame.display.set_caption('Point and Click Shooting Game') # Window title
 
 #name and email for players
 user_name = ''
+user_email = ''
 
 def import_animation(vfx_dir):
     vfx_frames = []
@@ -50,6 +51,10 @@ try:
     ]
     background_image = pygame.transform.scale(background_images[0], (const.screen_width, const.screen_height))
     
+    # Start screen background
+    ss_background_image = pygame.image.load("./img/ssbg1920x1080.png").convert_alpha()
+    ss_background_image = pygame.transform.scale(ss_background_image, (const.screen_width, const.screen_height))
+
     # flying objects
     FLYING_OBJECT = pygame.image.load("img/cyber.png") 
     FLYING_OBJECT_WIDTH = int(FLYING_OBJECT.get_width() * const.scale_flying_object)
