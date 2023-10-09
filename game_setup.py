@@ -57,9 +57,9 @@ try:
     planet1 = pygame.image.load("./img/pink.png").convert_alpha()
     planet1 = pygame.transform.scale(planet1, (planet1.get_width() * 0.2, planet1.get_height() * 0.2))
     planet2 = pygame.image.load("./img/green.png").convert_alpha()
-    planet2 = pygame.transform.scale(planet2, (planet2.get_width() * 0.2, planet2.get_height() * 0.2))
+    planet2 = pygame.transform.scale(planet2, (planet2.get_width() * 0.28, planet2.get_height() * 0.28))
     planet3 = pygame.image.load("./img/orange.png").convert_alpha()
-    planet3 = pygame.transform.scale(planet3, (planet3.get_width() * 0.2, planet3.get_height() * 0.2))
+    planet3 = pygame.transform.scale(planet3, (planet3.get_width() * 0.15, planet3.get_height() * 0.15))
 
     # Start screen imgs
     ss_background_image = pygame.image.load("./img/ssbg1920x1080.png").convert_alpha()
