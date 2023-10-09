@@ -14,8 +14,14 @@ CurrentState = 'Start_Screen'
 
 
 pygame.init() # Initialize Pygame
-screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN) # Create the screen in fullscreen mode
+
+# Handle screen
+num_displays = pygame.display.get_num_displays() #Use this to let user choose screen within the game later
+chosen_screen = 0  # This could be an index selected by the player
+screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN, display=chosen_screen) # Create the screen in fullscreen mode
 const.screen_width, const.screen_height = screen.get_size() # Retrieve the actual screen dimensions
+
+
 pygame.font.init() # Initialize Font
 const.DEFAULT_FONT = pygame.font.SysFont(None, const.screen_width//50)  # Scale font size to screen size. (Avoid tiny text on 4k)
 

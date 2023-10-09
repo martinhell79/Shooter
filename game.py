@@ -42,7 +42,7 @@ def start_game(time_limit=30):
             running = events.startScreenEvents()
             pygame.display.flip()
 
-        if (game_setup.CurrentState == GAME_STATE['Playing']):
+        elif (game_setup.CurrentState == GAME_STATE['Playing']):
             SCREEN.blit(background_image, (0, 0))
             render.render_cursor(crosshair_image)
 
@@ -89,6 +89,9 @@ def start_game(time_limit=30):
         elif (game_setup.CurrentState == GAME_STATE['Highscore_Entry']):
             running = render.render_highscore_page(score)
         
+        else:
+            print('No matching game state - quitting')
+            running = False
 
     print(f"Final Score: {score}")
     pygame.quit()

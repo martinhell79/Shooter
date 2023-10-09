@@ -61,13 +61,12 @@ def startScreenEvents():
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
                 return False
-            if event.key == pygame.K_RETURN:
+            elif event.key == pygame.K_RETURN: #Return character starts game
                 game_setup.CurrentState = game_setup.GameState['Playing']
-                print('return pressed')
                 return True
-            if event.key == pygame.K_BACKSPACE:
+            elif event.key == pygame.K_BACKSPACE:
                 game_setup.user_name = game_setup.user_name[:-1]
-            else:
+            elif 32 <= event.key <= 126: #accept printable characters as input
                 game_setup.user_name += event.unicode
         elif event.type == pygame.MOUSEBUTTONDOWN:
             if ss.name_rect.collidepoint(event.pos):
