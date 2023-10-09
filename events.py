@@ -63,18 +63,26 @@ def startScreenEvents():
                 return False
             elif event.key == pygame.K_RETURN: #Return character starts game
                 game_setup.CurrentState = game_setup.GameState['Playing']
+                game_setup.start_time = pygame.time.get_ticks()
+                print("Start button clicked!")
                 return True
             elif event.key == pygame.K_BACKSPACE:
                 ss.eraseActiveString()
             elif 32 <= event.key <= 126: #accept printable characters as input
                 ss.appendActiveString(event.unicode)
-        elif event.type == pygame.MOUSEBUTTONDOWN:
+            elif event.key == pygame.K_TAB:
+                ss.switchActiveBox()
+        elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+            mouse_x, mouse_y = pygame.mouse.get_pos()
+            if ss.clear_name_x <= mouse_x <= ss.clear_name_x + game_setup.clear_img_w and ss.clear_name_y <= mouse_y <= ss.clear_name_y + game_setup.clear_img_h:
+                game_setup.user_name = ''
             if ss.name_rect.collidepoint(event.pos):
-                ss.email_rect_active = False
-                ss.name_rect_active = True
-            elif ss.email_rect.collidepoint(event.pos):
-                ss.name_rect_active = False
-                ss.email_rect_active = True
+                ss.switchActiveBox('name')
+            if ss.clear_email_x <= mouse_x <= ss.clear_email_x + game_setup.clear_img_w and ss.clear_email_y <= mouse_y <= ss.clear_email_y + game_setup.clear_img_h:
+                game_setup.user_email = ''
+            if ss.email_rect.collidepoint(event.pos):
+                ss.switchActiveBox('email')
+            
                 
                 # Handle the Start button click
                 print("Start button clicked!")

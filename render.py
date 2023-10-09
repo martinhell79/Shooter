@@ -18,7 +18,7 @@ def render_score(score):
 
 def render_timer(remaining_time):
     timer_text = const.DEFAULT_FONT.render(f"Time: {remaining_time}", True, const.WHITE)
-    SCREEN.blit(timer_text, (const.screen_width//2.2, 10))  # Display the timer at (10, 10) on the screen
+    SCREEN.blit(timer_text, (const.screen_width//2.1, 40))  # Display the timer at (10, 10) on the screen
 
 
 def popup_hitscore(score, x, y):
@@ -88,7 +88,6 @@ def render_start_screen():
     text_fill_color = pygame.Color('gray80')
 
 
-    #SCREEN.fill((0,0,0))
 
     #Name box
     #pygame.draw.rect(SCREEN,text_fill_color,ss.name_rect) #ractangle background
@@ -98,11 +97,15 @@ def render_start_screen():
         pygame.draw.rect(SCREEN,text_rect_color_inactive,ss.name_rect,1)
     text_surface = base_font.render(game_setup.user_name, True, text_color)
     SCREEN.blit(text_surface,(ss.name_rect.x + 10, ss.name_rect.y + 10))
-    ss.name_rect.w = max(500, text_surface.get_width() + 20)
+    ss.name_rect.w = max(500, text_surface.get_width() + 70)
     #Name string relative to box
     nametext = base_font.render('Name:', True, (255, 255, 255))
     SCREEN.blit(nametext, (ss.name_rect_x - 110, ss.name_rect_y+10))
-    
+    #clear icon
+    ss.clear_name_x = ss.name_rect.x + ss.name_rect.w - 55
+    ss.clear_name_y = ss.name_rect.y + 1
+    SCREEN.blit(game_setup.clear_img, (ss.clear_name_x, ss.clear_name_y))
+
     #Email box
     if ss.email_rect_active:
         pygame.draw.rect(SCREEN,text_rect_color_active,ss.email_rect,5)
@@ -110,11 +113,14 @@ def render_start_screen():
         pygame.draw.rect(SCREEN,text_rect_color_inactive,ss.email_rect,1)
     text_surface = base_font.render(game_setup.user_email, True, text_color)
     SCREEN.blit(text_surface,(ss.email_rect.x + 10, ss.email_rect.y + 10))
-    ss.email_rect.w = max(500, text_surface.get_width() + 20)
+    ss.email_rect.w = max(500, text_surface.get_width() + 70)
     # Email string relative to box
     emailtext = base_font.render('Email:', True, (255, 255, 255))
     SCREEN.blit(emailtext, (ss.email_rect_x - 110, ss.email_rect_y+10))
-
+    #clear icon
+    ss.clear_email_x = ss.email_rect.x + ss.email_rect.w - 55
+    ss.clear_email_y = ss.email_rect.y + 1
+    SCREEN.blit(game_setup.clear_img, (ss.clear_email_x, ss.clear_email_y))
 
 
 

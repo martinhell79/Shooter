@@ -11,7 +11,6 @@ import render
 
 GAME_STATE = game_setup.GameState
 SCREEN = game_setup.screen
-start_time = game_setup.start_time
 
 background_image = game_setup.background_image
 crosshair_image = game_setup.crosshair_image
@@ -32,6 +31,7 @@ def start_game(time_limit=30):
     explosions = []
     laser_shots = []
 
+    
     last_time = time.time()
     # Main game loop
     game_setup.CurrentState = GAME_STATE['Start_Screen'];
@@ -45,12 +45,14 @@ def start_game(time_limit=30):
         elif (game_setup.CurrentState == GAME_STATE['Playing']):
             SCREEN.blit(background_image, (0, 0))
             render.render_cursor(crosshair_image)
-
+            
             current_time = time.time()
             dt = current_time - last_time
             last_time = current_time
+            
             c_time = pygame.time.get_ticks()
-            elapsed_time = (c_time - start_time) // 1000  # Convert milliseconds to seconds
+            elapsed_time = (c_time - game_setup.start_time) // 1000  # Convert milliseconds to seconds
+            #print(f'start: {game_setup.start_time}, c_time: {c_time}, Elapsed: {elapsed_time}')
             remaining_time = max(0, time_limit - elapsed_time)  # Ensure remaining_time doesn't go below 0
             if remaining_time == 0:
                 game_setup.CurrentState = GAME_STATE['Game_Over']

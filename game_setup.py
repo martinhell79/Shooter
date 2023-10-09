@@ -22,12 +22,15 @@ screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN, display=chosen_scree
 const.screen_width, const.screen_height = screen.get_size() # Retrieve the actual screen dimensions
 
 
+#Allow holding key down to enable multiple chars
+pygame.key.set_repeat(500, 50)
+
 pygame.font.init() # Initialize Font
 const.DEFAULT_FONT = pygame.font.SysFont(None, const.screen_width//50)  # Scale font size to screen size. (Avoid tiny text on 4k)
 
 TRANSPARENT = (0, 0, 0, 0)
 
-start_time = pygame.time.get_ticks()
+start_time = 0
 
 pygame.display.set_caption('Point and Click Shooting Game') # Window title
 
@@ -51,9 +54,12 @@ try:
     ]
     background_image = pygame.transform.scale(background_images[0], (const.screen_width, const.screen_height))
     
-    # Start screen background
+    # Start screen imgs
     ss_background_image = pygame.image.load("./img/ssbg1920x1080.png").convert_alpha()
     ss_background_image = pygame.transform.scale(ss_background_image, (const.screen_width, const.screen_height))
+    clear_img = pygame.image.load("./img/clear.png").convert_alpha()
+    clear_img_w = clear_img.get_width()
+    clear_img_h = clear_img.get_height()
 
     # flying objects
     FLYING_OBJECT = pygame.image.load("img/cyber.png") 
