@@ -49,11 +49,18 @@ def import_animation(vfx_dir):
 
 # Load all images
 try:
+    # gameplay
     background_images = [
         pygame.image.load("./img/bg1920x1080.jpg").convert_alpha()
     ]
     background_image = pygame.transform.scale(background_images[0], (const.screen_width, const.screen_height))
-    
+    planet1 = pygame.image.load("./img/pink.png").convert_alpha()
+    planet1 = pygame.transform.scale(planet1, (planet1.get_width() * 0.2, planet1.get_height() * 0.2))
+    planet2 = pygame.image.load("./img/green.png").convert_alpha()
+    planet2 = pygame.transform.scale(planet2, (planet2.get_width() * 0.2, planet2.get_height() * 0.2))
+    planet3 = pygame.image.load("./img/orange.png").convert_alpha()
+    planet3 = pygame.transform.scale(planet3, (planet3.get_width() * 0.2, planet3.get_height() * 0.2))
+
     # Start screen imgs
     ss_background_image = pygame.image.load("./img/ssbg1920x1080.png").convert_alpha()
     ss_background_image = pygame.transform.scale(ss_background_image, (const.screen_width, const.screen_height))

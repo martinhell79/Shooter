@@ -44,6 +44,9 @@ def start_game(time_limit=30):
 
         elif (game_setup.CurrentState == GAME_STATE['Playing']):
             SCREEN.blit(background_image, (0, 0))
+            SCREEN.blit(game_setup.planet1, (50,50))
+            SCREEN.blit(game_setup.planet2, (const.screen_width - 450, 100))
+            SCREEN.blit(game_setup.planet3, (170, const.screen_height - 300))
             render.render_cursor(crosshair_image)
             
             current_time = time.time()
