@@ -58,12 +58,17 @@ def render_highscore_page(score):
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
                 running = False
-
+    font = pygame.font.SysFont(None, 55)
     SCREEN.fill(const.BLACK)  # Clear the screen
     #pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW) # get normal cursor
     pygame.mouse.set_visible(True)
-    final_score_text = const.DEFAULT_FONT.render(f"Final Score: {int(score)}", True, const.WHITE)
-    SCREEN.blit(final_score_text, (const.screen_width // 6 , const.screen_height // 2 - 50))
+    score_x = const.screen_width // 6 - 50
+    score_y = const.screen_height // 2 - 50
+
+    SCREEN.blit(game_setup.hand_img, (score_x, score_y + 50))
+
+    score_text = font.render(f"Score: {int(score)}", True, const.WHITE)
+    SCREEN.blit(score_text, (score_x + 20, score_y))
     hs.display_highscores(pygame, SCREEN, const.screen_width, const.screen_height)
     pygame.display.flip()  # Update the display
     return running
@@ -122,6 +127,8 @@ def render_start_screen():
     ss.clear_email_y = ss.email_rect.y + 1
     SCREEN.blit(game_setup.clear_img, (ss.clear_email_x, ss.clear_email_y))
 
+    #ship image
+    SCREEN.blit(game_setup.ship_img, (20, const.screen_height - game_setup.ship_img.get_height()))
 
 
 

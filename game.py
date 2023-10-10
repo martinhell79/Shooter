@@ -20,7 +20,7 @@ plane_r = game_setup.PLANE_R
 
 
 
-def start_game(time_limit=30):
+def start_game(time_limit=2):
     #Gameplay variables
     remaining_time = time_limit
     planes = [spawn.spawn_plane() for _ in range(1)] # Lets start with one plane
@@ -55,7 +55,6 @@ def start_game(time_limit=30):
             
             c_time = pygame.time.get_ticks()
             elapsed_time = (c_time - game_setup.start_time) // 1000  # Convert milliseconds to seconds
-            #print(f'start: {game_setup.start_time}, c_time: {c_time}, Elapsed: {elapsed_time}')
             remaining_time = max(0, time_limit - elapsed_time)  # Ensure remaining_time doesn't go below 0
             if remaining_time == 0:
                 game_setup.CurrentState = GAME_STATE['Game_Over']

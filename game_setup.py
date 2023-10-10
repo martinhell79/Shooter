@@ -67,6 +67,8 @@ try:
     clear_img = pygame.image.load("./img/clear.png").convert_alpha()
     clear_img_w = clear_img.get_width()
     clear_img_h = clear_img.get_height()
+    ship_img = pygame.image.load("./img/starship.png").convert_alpha()
+    ship_img = pygame.transform.scale(ship_img, (ship_img.get_width() * 0.25, ship_img.get_height() * 0.25))
 
     # flying objects
     FLYING_OBJECT = pygame.image.load("img/cyber.png") 
@@ -85,6 +87,10 @@ try:
     PLANE_R_WIDTH = int(PLANE_R.get_width() * const.scale_plane)
     PLANE_R_HEIGHT = int(PLANE_R.get_height() * const.scale_plane)
     PLANE_R = pygame.transform.scale(PLANE_R, (PLANE_R_WIDTH, PLANE_R_HEIGHT))
+
+    # End_screen imgs
+    hand_img = pygame.image.load("./img/robot-hand.png").convert_alpha()
+    hand_img = pygame.transform.scale(hand_img, (hand_img.get_width() * 0.7, hand_img.get_height() * 0.7))
     
     # print mask. Just to check that masking works. Will not be visible when we add background on top of it.
     mask = pygame.mask.from_surface(PLANE_R)
