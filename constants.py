@@ -2,18 +2,21 @@
 OBJ_SIZE = 20  
 
 # Scale flying objects if images are not correct size
-scale_flying_object = 0.2
+scale_flying_object = 0.3
 
 # Set min and max speed of flying objects
 MIN_SPEED_FLYING_OBJECT = 100
 MAX_SPEED_FLYING_OBJECT = 300
 
 # Scale planes if images are not correct size
-scale_plane = 0.4
+scale_plane = 0.6
 
 # Set min and max speed of flying objects
 MIN_SPEED_PLANE = 250
 MAX_SPEED_PLANE = 400
+
+# Set radius for bonus time circles
+BONUS_CIRCLE_RADIUS = 30
 
 # penalty for hitting a plane
 PLANE_PENALTY = -500

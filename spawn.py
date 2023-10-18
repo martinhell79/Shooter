@@ -1,4 +1,4 @@
-from game_object import FlyingObject
+from game_object import FlyingObject, CircleObject
 from math import radians, cos, sin
 import random
 import constants as const
@@ -41,11 +41,16 @@ def spawn_plane():
         angle = radians(195)
         plane = plane_l
         start_x = const.screen_width+50
-        start_y = random.randint(int(0.05 * const.screen_height), int(0.80 * const.screen_height))
+        start_y = random.randint(int(0.10 * const.screen_height), int(0.60 * const.screen_height))
     elif dir == 1:
         angle = radians(345)
         plane = plane_r
         start_x = -50
-        start_y = random.randint(int(0.05 * const.screen_height), int(0.80 * const.screen_height))
+        start_y = random.randint(int(0.10 * const.screen_height), int(0.60 * const.screen_height))
     velocity = [speed * cos(angle), -speed * sin(angle)] 
     return FlyingObject(start_x, start_y, plane, velocity, speed)
+
+def spawn_time_adder():
+    start_x = random.randint(int(0.15 * const.screen_width), int(0.85 * const.screen_width))
+    start_y = random.randint(int(0.15 * const.screen_height), int(0.85 * const.screen_height))
+    return CircleObject(start_x, start_y, 2)

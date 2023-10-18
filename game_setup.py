@@ -32,6 +32,9 @@ TRANSPARENT = (0, 0, 0, 0)
 
 start_time = 0
 
+spawn_time_circles = [11, 21, 31]
+time_bonus = 0
+
 pygame.display.set_caption('Point and Click Shooting Game') # Window title
 
 #name and email for players
