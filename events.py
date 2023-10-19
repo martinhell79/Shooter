@@ -39,7 +39,7 @@ def consume_events(score, objects, planes, bonus_circle, score_popups, explosion
                     explosions.append(AnimationObject(bonus_circle[0].x, bonus_circle[0].y, game_setup.VFX_EXPLOSION, x_offset=80, y_offset=100, size_modifier=0.5))
                     bonus_circle.pop(0)
                     # We should not be penalized if we shoot a bonus on top of a plane, so just return if we hit a bonus
-                    return
+                    return running, score
             for obj in objects[:]:
                 time_elapsed = current_time - obj.timestamp
                 if (is_click_on_sprite(mouse_x, mouse_y, int(obj.x), int(obj.y), obj.image)):

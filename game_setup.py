@@ -1,7 +1,7 @@
 import pygame
 import constants as const
 import os
-
+import random
 
 # Init game variables
 GameState = {
@@ -32,8 +32,10 @@ TRANSPARENT = (0, 0, 0, 0)
 
 start_time = 0
 
-spawn_time_circles = [11, 21, 31]
+# Keep track of when bonus circles pop up and how much bonus time to add
+spawn_time_circles = [8 + random.randint(0, 4), 18 + random.randint(0, 5), 31 + random.randint(0, 1)]
 time_bonus = 0
+
 
 pygame.display.set_caption('Point and Click Shooting Game') # Window title
 
