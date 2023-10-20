@@ -86,7 +86,7 @@ try:
     clear_img_h = clear_img.get_height()
     logo_img = pygame.image.load("./img/Logo.png").convert_alpha()
     logo_img = pygame.transform.scale(logo_img, (logo_img.get_width() * 0.9, logo_img.get_height() * 0.9))
-    hs_rect = pygame.image.load("./img/HS_rectangle.png").convert_alpha()
+    hs_rect = pygame.image.load("./img/HS_Rectangle.png").convert_alpha()
     hs_rect = pygame.transform.scale(hs_rect, (const.screen_width * 0.35, const.screen_height * 0.6))
     hs_trophy = pygame.image.load("./img/trophy.png").convert_alpha()
     hs_trophy = pygame.transform.scale(hs_trophy, (hs_rect.get_width() * 0.2, hs_rect.get_width() * 0.2))
