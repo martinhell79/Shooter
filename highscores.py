@@ -1,3 +1,5 @@
+import math
+
 def load_highscores():
     try:
         with open("highscores.txt", "r") as file:
@@ -22,15 +24,32 @@ def display_highscores(pygame, screen, width, height):
     sorted_highscores = sorted(highscores, key=lambda x: x["score"], reverse=True)
 
     font = pygame.font.SysFont(None, 55)  # Default font, size 36
-    hs_text = font.render('HIGHSCORE', True, (255, 255, 255))
+    
+    time_elapsed = pygame.time.get_ticks() / 1000
+    color = (255,255,255)
+    color_change_speed = 6
+    r = int(255 * abs(math.sin(time_elapsed * color_change_speed)))
+    g = int(255 * abs(math.sin(time_elapsed * color_change_speed + 2 * math.pi / 3)))
+    b = int(255 * abs(math.sin(time_elapsed * color_change_speed + 4 * math.pi / 3)))
+    color = (r, g, b)
+    hs_text = font.render('HIGHSCORE', True, color)
     screen.blit(hs_text, (3 * width // 5 , height // 2 - 100))
+
+    
+    
     # Display the top 5 highscores
     font = pygame.font.SysFont(None, 36)  # Default font, size 36
+    # color = [(255,0,0),(0,255,0),(0,0,255),(128,128,128),(100,200,250)]
+    color_change_speed = [3,4,5,6,7]
     for i, entry in enumerate(sorted_highscores[:5]):
-        score_text = font.render(f"{i+1}. {int(entry['score'])}", True, (255, 255, 255))
+        time_elapsed = (pygame.time.get_ticks() / 1000) + i
+        r = int(100 + 80 * abs(math.sin(time_elapsed * color_change_speed[i])))
+        g = int(150 + 80 * abs(math.sin(time_elapsed * color_change_speed[i] + 2 * math.pi / 3)))
+        b = int(150 + 80 * abs(math.sin(time_elapsed * color_change_speed[i] + 4 * math.pi / 3)))
+        color = (r, g, b)
+        score_text = font.render(f"{i+1}. {int(entry['score'])}", True, color)
         screen.blit(score_text, (3 * width // 5 , height // 2 - 50 + 30 * i))
     
-
 
 def update_highscores(player_score):
     global highscores
