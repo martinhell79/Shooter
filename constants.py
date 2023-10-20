@@ -2,7 +2,7 @@
 OBJ_SIZE = 20  
 
 # Scale flying objects if images are not correct size
-scale_flying_object = 0.3
+scale_flying_object = 0.9
 
 scale_bonus_time_clock = 1
 
