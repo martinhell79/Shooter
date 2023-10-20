@@ -6,9 +6,10 @@ import random
 # Init game variables
 GameState = {
     "Start_Screen": 0,
-    "Playing": 1,
-    "Game_Over": 2,
-    "Highscore_Entry": 3,
+    "Intro_Screen": 1,
+    "Playing": 2,
+    "Game_Over": 3,
+    "Highscore_Entry": 4,
 }
 CurrentState = 'Start_Screen'
 

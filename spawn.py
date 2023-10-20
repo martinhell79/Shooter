@@ -11,11 +11,12 @@ plane_r = game_setup.PLANE_R
 # spawn new object that flies in a straight line across the screen. Apply some restrictions so that they actually cross the full screen.
 def spawn_object():
     edge = random.choice(['top', 'bottom', 'left', 'right'])
+    max = 60
     angle_range = {
-        'top': (260, 280),
-        'bottom': (80, 100),
-        'left': (350, 370),
-        'right': (170, 190)
+        'top': (270-max, 270+max),
+        'bottom': (90-max, 90+max),
+        'left': (360-max, 360+max),
+        'right': (180-max, 180+max)
     }
     min_angle, max_angle = angle_range[edge]
 
