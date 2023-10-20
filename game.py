@@ -93,7 +93,7 @@ def start_game(time_limit=30):
             pygame.display.flip()  # Update the display
 
         elif (game_setup.CurrentState == GAME_STATE['Game_Over']):
-            hs.load_highscores()
+            #hs.load_highscores()
             print(f'score: {score}')
             print(f'game_setup.score: {game_setup.score}')
             hs.update_highscores(score)
@@ -113,4 +113,4 @@ def start_game(time_limit=30):
 
 
 if __name__ == "__main__":
-    start_game(30)
+    start_game(5)
