@@ -22,10 +22,13 @@ clear_name_y = name_rect.y + 1
 clear_email_x = email_rect.x - 55
 clear_email_y = email_rect.y + 1
 
-
+# Keep track of which entry is active
 name_rect_active = True
 email_rect_active = False
 
+
+start_img_x = const.screen_width - game_setup.start_img.get_width() - 40
+start_img_y = const.screen_height - game_setup.start_img.get_height() - 40
 
 
 def eraseActiveString():

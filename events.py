@@ -108,8 +108,9 @@ def startScreenEvents():
                 game_setup.user_email = ''
             if ss.email_rect.collidepoint(event.pos):
                 ss.switchActiveBox('email')
-            
-                
+            if ss.start_img_x <= mouse_x <= ss.start_img_x + game_setup.start_img.get_width() and ss.start_img_y <= mouse_y <= ss.start_img_y + game_setup.start_img.get_height():
+                init_play()
+                return True
                 # Handle the Start button click
                 print("Start button clicked!")
                 print(f"Name: {game_setup.user_name}")
