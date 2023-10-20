@@ -46,13 +46,13 @@ class FlyingObject(BaseObject):
         #print(f"Total Time: {self.total_time}")  # Debug print
 
     def draw(self, screen, font, current_time):
-         #see how long the object has been on the screen
+        # see how long the object has been on the screen
         time_elapsed = current_time - self.timestamp  # Should be increasing as time goes on
         
         # Draw circle in new position
         # pygame.draw.circle(screen, self.color, (int(self.x), int(self.y)), self.radius)
         screen.blit(self.image, (int(self.x), int(self.y)))
-        #Compute and display current score for object
+        # Compute and display current score for object
         current_score = self.end_score + (self.start_score - self.end_score) * (1 - (time_elapsed / self.total_time))
         if self.debug:
             score_text = font.render(f"{int(current_score)}", True, const.WHITE)
@@ -101,6 +101,40 @@ class CircleObject(BaseObject):
         if self.radius < const.BONUS_CIRCLE_RADIUS:
             self.radius += self.growth_rate
 
+
+class TimedObject(BaseObject):
+    def __init__(self, x, y, image, lifespan, start_size_modifier=0.1, max_size_modifier=1, growth_rate=0.1, debug=False):
+        super().__init__(x, y)
+        self.image = image
+        self.original_width = image.get_width()
+        self.original_height = image.get_height()
+
+        self.max_size_modifier = max_size_modifier
+        self.size_modifier = start_size_modifier
+    
+        self.growth_rate = growth_rate
+        self.lifespan = lifespan
+        self.creation_time = time.time()
+        self.elapsed_time = 0
+
+        self.debug = debug
+
+    def draw(self, screen, font, current_time=None):
+        screen.blit(self.image, (int(self.x), int(self.y)))
+        if self.elapsed_time >= self.lifespan:
+            popup_text = font.render("+3s", True, (255, 255, 255))
+            screen.blit(popup_text, (int(self.x) - 20, int(self.y) - 10))
+
+    def update(self, dt=None):
+        self.elapsed_time = time.time() - self.creation_time
+        # Gradually increase the size until it reaches max
+        if self.size_modifier < self.max_size_modifier:
+            new_size = self.size_modifier + self.growth_rate
+            self.size_modifier = min(new_size, self.max_size_modifier)
+
+            new_width = self.original_width * self.size_modifier
+            new_height = self.original_height * self.size_modifier
+            self.image = pygame.transform.scale(self.image, (new_width, new_height))
 
 
 class AnimationObject:
