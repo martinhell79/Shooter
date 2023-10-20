@@ -17,8 +17,9 @@ pygame.init() # Initialize Pygame
 
 pygame.mixer.init() # Initialize sounds
 SOUND_DIR = "sound"
-
 SOUND_LASER = pygame.mixer.Sound(os.path.join(SOUND_DIR, '420365__bolkmar__sfx-laser-shot-s-modified.wav'))
+SOUND_EXPLOSION = pygame.mixer.Sound(os.path.join(SOUND_DIR, '186958__readeonly__explosion7.wav'))
+SOUND_TIME_EXTENSION = pygame.mixer.Sound(os.path.join(SOUND_DIR, '398194__inspectorj__cuckoo-clock-single-a.wav'))
 
 # Handle screen
 num_displays = pygame.display.get_num_displays() #Use this to let user choose screen within the game later
