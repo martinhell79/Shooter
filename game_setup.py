@@ -33,7 +33,7 @@ const.screen_width, const.screen_height = screen.get_size() # Retrieve the actua
 pygame.key.set_repeat(500, 50)
 
 pygame.font.init() # Initialize Font
-const.DEFAULT_FONT = pygame.font.SysFont(None, const.screen_width//50)  # Scale font size to screen size. (Avoid tiny text on 4k)
+const.DEFAULT_FONT = pygame.font.SysFont(None, const.screen_width//40)  # Scale font size to screen size. (Avoid tiny text on 4k)
 
 TRANSPARENT = (0, 0, 0, 0)
 
@@ -103,6 +103,12 @@ try:
     PLANE_R_WIDTH = int(PLANE_R.get_width() * const.scale_plane)
     PLANE_R_HEIGHT = int(PLANE_R.get_height() * const.scale_plane)
     PLANE_R = pygame.transform.scale(PLANE_R, (PLANE_R_WIDTH, PLANE_R_HEIGHT))
+
+    # Clock for bonus time
+    BONUS_TIME_CLOCK = pygame.image.load("./img/clock.png").convert_alpha()
+    BONUS_TIME_CLOCK_WIDTH = int(BONUS_TIME_CLOCK.get_width() * const.scale_bonus_time_clock)
+    BONUS_TIME_CLOCK_HEIGHT = int(BONUS_TIME_CLOCK.get_height() * const.scale_bonus_time_clock)
+    BONUS_TIME_CLOCK = pygame.transform.scale(BONUS_TIME_CLOCK, (BONUS_TIME_CLOCK_WIDTH, BONUS_TIME_CLOCK_HEIGHT))
 
     # End_screen imgs
     hand_img = pygame.image.load("./img/robot-hand.png").convert_alpha()
