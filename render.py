@@ -2,6 +2,7 @@ import constants as const
 import game_setup
 import pygame
 import start_screen as ss
+import highscores as hs
 
 import highscores as hs
 
@@ -69,7 +70,7 @@ def render_highscore_page(score):
 
     score_text = font.render(f"Score: {int(score)}", True, const.WHITE)
     SCREEN.blit(score_text, (score_x + 20, score_y))
-    hs.display_highscores(pygame, SCREEN, const.screen_width, const.screen_height)
+    hs.display_highscores(3 * const.screen_width // 5 , const.screen_height // 2 - 100, 3 * const.screen_width // 5 - 50, const.screen_height // 2 + 30)
     pygame.display.flip()  # Update the display
     return running
 
@@ -128,6 +129,12 @@ def render_start_screen():
     ss.clear_email_y = ss.email_rect.y + 1
     SCREEN.blit(game_setup.clear_img, (ss.clear_email_x, ss.clear_email_y))
 
+    # Highscore
+    hs_rect_x = const.screen_width * 0.33
+    hs_rect_y = const.screen_height * 0.3
+    SCREEN.blit(game_setup.hs_rect, (hs_rect_x, hs_rect_y))
+    SCREEN.blit(game_setup.hs_trophy, (hs_rect_x + game_setup.hs_rect.get_width() / 2 - game_setup.hs_trophy.get_width() / 2, hs_rect_y - game_setup.hs_trophy.get_height()-10))
+    hs.display_highscores(hs_rect_x + game_setup.hs_rect.get_width() / 2, hs_rect_y + 40, 1.1 * hs_rect_x, hs_rect_y + 0.2 * game_setup.hs_rect.get_height())
     
     
 
