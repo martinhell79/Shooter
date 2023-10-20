@@ -43,7 +43,7 @@ class FlyingObject(BaseObject):
         # Calculate total_time based on the exact distance to the edge
         self.total_time = t_to_edge
 
-        print(f"Total Time: {self.total_time}")  # Debug print
+        #print(f"Total Time: {self.total_time}")  # Debug print
 
     def draw(self, screen, font, current_time):
          #see how long the object has been on the screen
@@ -96,7 +96,7 @@ class CircleObject(BaseObject):
     def update(self, dt):
         # Calculate the elapsed time since creation
         self.elapsed_time = time.time() - self.creation_time
-        print(f"etime: {self.elapsed_time}")
+        #print(f"etime: {self.elapsed_time}")
         # Gradually increase the radius until it reaches max_radius
         if self.radius < const.BONUS_CIRCLE_RADIUS:
             self.radius += self.growth_rate

@@ -5,6 +5,8 @@ import constants as const
 import render
 import start_screen as ss
 import math
+import time
+import spawn
 
 
 SCREEN = game_setup.screen
@@ -21,7 +23,7 @@ def is_click_on_sprite(mouse_x, mouse_y, sprite_x, sprite_y, image):
             return 1
     return False
 
-def consume_events(score, objects, planes, bonus_circle, score_popups, explosions, laser_shots, current_time):
+def consume_events(objects, planes, bonus_circle, score_popups, explosions, laser_shots, current_time):
     running = True
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -39,24 +41,24 @@ def consume_events(score, objects, planes, bonus_circle, score_popups, explosion
                     explosions.append(AnimationObject(bonus_circle[0].x, bonus_circle[0].y, game_setup.VFX_EXPLOSION, x_offset=80, y_offset=100, size_modifier=0.5))
                     bonus_circle.pop(0)
                     # We should not be penalized if we shoot a bonus on top of a plane, so just return if we hit a bonus
-                    return running, score
+                    return running, game_setup.score
             for obj in objects[:]:
                 time_elapsed = current_time - obj.timestamp
                 if (is_click_on_sprite(mouse_x, mouse_y, int(obj.x), int(obj.y), obj.image)):
                     score_increment = int(obj.end_score + (obj.start_score - obj.end_score) * ((obj.total_time - time_elapsed) / obj.total_time))
                     objects.remove(obj)
-                    score += score_increment
+                    game_setup.score += score_increment
                 # Add score popup to array
                     score_popups.append({"score": score_increment, "x": mouse_x, "y": mouse_y, "timestamp": current_time})
                 # Animate explosion
                     explosions.append(AnimationObject(obj.x, obj.y, game_setup.VFX_EXPLOSION, x_offset=game_setup.FLYING_OBJECT_WIDTH//30, y_offset=game_setup.FLYING_OBJECT_HEIGHT//3))
             for pl in planes[:]:  
                 time_elapsed = current_time - pl.timestamp    
-                print(f'x: {pl.x} y: {pl.y} mx: {mouse_x} my: {mouse_y}') 
+                #print(f'x: {pl.x} y: {pl.y} mx: {mouse_x} my: {mouse_y}') 
                 if (is_click_on_sprite(mouse_x, mouse_y, int(pl.x), int(pl.y), pl.image)):
                     score_increment = const.PLANE_PENALTY
                     planes.remove(pl)
-                    score += score_increment
+                    game_setup.score += score_increment
                     # Add score popup to array
                     score_popups.append({"score": score_increment, "x": mouse_x, "y": mouse_y, "timestamp": current_time})
                     # Animate explosion (same for all planes currently)
@@ -64,7 +66,7 @@ def consume_events(score, objects, planes, bonus_circle, score_popups, explosion
             
 
 
-    return running, score
+    return running, game_setup.score
 
 def startScreenEvents():
     running = True
@@ -74,10 +76,8 @@ def startScreenEvents():
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
                 return False
-            elif event.key == pygame.K_RETURN: #Return character starts game
-                game_setup.CurrentState = game_setup.GameState['Playing']
-                game_setup.start_time = pygame.time.get_ticks()
-                print("Start button clicked!")
+            elif event.key == pygame.K_RETURN: #Return character starts game                
+                init_play()
                 return True
             elif event.key == pygame.K_BACKSPACE:
                 ss.eraseActiveString()
@@ -102,3 +102,30 @@ def startScreenEvents():
                 print(f"Name: {game_setup.user_name}")
                 print(f"Email: {game_setup.user_name}")
     return running
+
+
+def endPageEvents():
+    running = True
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_ESCAPE:
+                return False
+            elif event.key == pygame.K_RETURN: #Return character re-initializes game
+                game_setup.CurrentState = game_setup.GameState['Start_Screen']
+
+    return running
+
+
+def init_play():
+    game_setup.CurrentState = game_setup.GameState['Playing']
+    game_setup.start_time = pygame.time.get_ticks()
+    game_setup.time_bonus = 0
+    game_setup.score = 0
+    game_setup.last_time = time.time()
+    game_setup.planes = [] #[spawn.spawn_plane() for _ in range(1)]
+    game_setup.objects = [] #[spawn.spawn_object() for _ in range(4)]
+    game_setup.bonus_circle = []
+    pass
+                

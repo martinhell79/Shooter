@@ -31,12 +31,16 @@ const.DEFAULT_FONT = pygame.font.SysFont(None, const.screen_width//50)  # Scale 
 
 TRANSPARENT = (0, 0, 0, 0)
 
-start_time = 0
+start_time = 0 #This is re-initialized when game is started
 
 # Keep track of when bonus circles pop up and how much bonus time to add
 spawn_time_circles = [8 + random.randint(0, 4), 18 + random.randint(0, 5), 31 + random.randint(0, 1)]
 time_bonus = 0
-
+last_time = 0
+score = 0
+planes = []
+objects = []
+bonus_circle = []
 
 pygame.display.set_caption('Point and Click Shooting Game') # Window title
 
