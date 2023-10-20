@@ -2,9 +2,9 @@ import game_setup
 import pygame
 from game_object import AnimationObject
 import constants as const
-import render
 import start_screen as ss
 import math
+from game_setup import SOUND_LASER
 
 
 SCREEN = game_setup.screen
@@ -21,6 +21,7 @@ def is_click_on_sprite(mouse_x, mouse_y, sprite_x, sprite_y, image):
             return 1
     return False
 
+
 def consume_events(score, objects, planes, bonus_circle, score_popups, explosions, laser_shots, current_time):
     running = True
     for event in pygame.event.get():
@@ -30,41 +31,48 @@ def consume_events(score, objects, planes, bonus_circle, score_popups, explosion
             if event.key == pygame.K_ESCAPE:
                 running = False
         elif event.type == pygame.MOUSEBUTTONDOWN:
-            mouse_x, mouse_y = pygame.mouse.get_pos()
-            laser_shots.append(AnimationObject(mouse_x, mouse_y, images=game_setup.VFX_LASER, x_offset=game_setup.FLYING_OBJECT_WIDTH//17, y_offset=game_setup.FLYING_OBJECT_HEIGHT//12,size_modifier=0.07))
-            if bonus_circle:
-                distance = math.sqrt((mouse_x - bonus_circle[0].x) ** 2 + (mouse_y - bonus_circle[0].y) ** 2)
-                if distance <= bonus_circle[0].radius:
-                    game_setup.time_bonus += 3
-                    explosions.append(AnimationObject(bonus_circle[0].x, bonus_circle[0].y, game_setup.VFX_EXPLOSION, x_offset=80, y_offset=100, size_modifier=0.5))
-                    bonus_circle.pop(0)
-                    # We should not be penalized if we shoot a bonus on top of a plane, so just return if we hit a bonus
-                    return running, score
-            for obj in objects[:]:
-                time_elapsed = current_time - obj.timestamp
-                if (is_click_on_sprite(mouse_x, mouse_y, int(obj.x), int(obj.y), obj.image)):
-                    score_increment = int(obj.end_score + (obj.start_score - obj.end_score) * ((obj.total_time - time_elapsed) / obj.total_time))
-                    objects.remove(obj)
-                    score += score_increment
-                # Add score popup to array
-                    score_popups.append({"score": score_increment, "x": mouse_x, "y": mouse_y, "timestamp": current_time})
-                # Animate explosion
-                    explosions.append(AnimationObject(obj.x, obj.y, game_setup.VFX_EXPLOSION, x_offset=game_setup.FLYING_OBJECT_WIDTH//30, y_offset=game_setup.FLYING_OBJECT_HEIGHT//3))
-            for pl in planes[:]:  
-                time_elapsed = current_time - pl.timestamp    
-                print(f'x: {pl.x} y: {pl.y} mx: {mouse_x} my: {mouse_y}') 
-                if (is_click_on_sprite(mouse_x, mouse_y, int(pl.x), int(pl.y), pl.image)):
-                    score_increment = const.PLANE_PENALTY
-                    planes.remove(pl)
-                    score += score_increment
-                    # Add score popup to array
-                    score_popups.append({"score": score_increment, "x": mouse_x, "y": mouse_y, "timestamp": current_time})
-                    # Animate explosion (same for all planes currently)
-                    explosions.append(AnimationObject(pl.x, pl.y, game_setup.VFX_EXPLOSION, x_offset=game_setup.PLANE_L_WIDTH//5, y_offset=game_setup.PLANE_L_HEIGHT))
-            
-
+            _consume_shoot_event(score, objects, planes, bonus_circle, score_popups, explosions, laser_shots, current_time, running)
 
     return running, score
+
+
+def _consume_shoot_event(score, objects, planes, bonus_circle, score_popups, explosions, laser_shots, current_time, running):
+    pygame.mixer.Sound.play(SOUND_LASER)
+    mouse_x, mouse_y = pygame.mouse.get_pos()
+    laser_shots.append(AnimationObject(mouse_x, mouse_y, images=game_setup.VFX_LASER, x_offset=game_setup.FLYING_OBJECT_WIDTH//17, y_offset=game_setup.FLYING_OBJECT_HEIGHT//12,size_modifier=0.07))
+    if bonus_circle:
+        distance = math.sqrt((mouse_x - bonus_circle[0].x) ** 2 + (mouse_y - bonus_circle[0].y) ** 2)
+        if distance <= bonus_circle[0].radius:
+            game_setup.time_bonus += 3
+            explosions.append(AnimationObject(bonus_circle[0].x, bonus_circle[0].y, game_setup.VFX_EXPLOSION, x_offset=80, y_offset=100, size_modifier=0.5))
+            bonus_circle.pop(0)
+            # We should not be penalized if we shoot a bonus on top of a plane, so just return if we hit a bonus
+            return running, score
+    for obj in objects[:]:
+        time_elapsed = current_time - obj.timestamp
+        if (is_click_on_sprite(mouse_x, mouse_y, int(obj.x), int(obj.y), obj.image)):
+            score_increment = int(obj.end_score + (obj.start_score - obj.end_score) * ((obj.total_time - time_elapsed) / obj.total_time))
+            objects.remove(obj)
+            score += score_increment
+        # Add score popup to array
+            score_popups.append({"score": score_increment, "x": mouse_x, "y": mouse_y, "timestamp": current_time})
+        # Animate explosion
+            explosions.append(AnimationObject(obj.x, obj.y, game_setup.VFX_EXPLOSION, x_offset=game_setup.FLYING_OBJECT_WIDTH//30, y_offset=game_setup.FLYING_OBJECT_HEIGHT//3))
+    for pl in planes[:]:  
+        time_elapsed = current_time - pl.timestamp    
+        print(f'x: {pl.x} y: {pl.y} mx: {mouse_x} my: {mouse_y}') 
+        if (is_click_on_sprite(mouse_x, mouse_y, int(pl.x), int(pl.y), pl.image)):
+            score_increment = const.PLANE_PENALTY
+            planes.remove(pl)
+            score += score_increment
+            # Add score popup to array
+            score_popups.append({"score": score_increment, "x": mouse_x, "y": mouse_y, "timestamp": current_time})
+            # Animate explosion (same for all planes currently)
+            explosions.append(AnimationObject(pl.x, pl.y, game_setup.VFX_EXPLOSION, x_offset=game_setup.PLANE_L_WIDTH//5, y_offset=game_setup.PLANE_L_HEIGHT))
+            
+
+    return running
+
 
 def startScreenEvents():
     running = True
