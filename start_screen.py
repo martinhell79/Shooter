@@ -3,16 +3,16 @@ import pygame
 import constants as const
 
 
-name_rect_x = 200
-name_rect_y = 200
-name_rect_width = 400
-name_rect_height = 50
+name_rect_x = const.screen_width * 0.07
+name_rect_y = const.screen_height * 0.4
+name_rect_width = const.screen_width * 0.2
+name_rect_height = 40
 name_rect = pygame.Rect(name_rect_x,name_rect_y, name_rect_width, name_rect_height)
 
-email_rect_x = 200
-email_rect_y = 280
-email_rect_width = 400
-email_rect_height = 50
+email_rect_x = const.screen_width * 0.07
+email_rect_y = const.screen_height * 0.50
+email_rect_width = const.screen_width * 0.2
+email_rect_height = 40
 email_rect = pygame.Rect(email_rect_x,email_rect_y,email_rect_width,email_rect_height)
 
 # position for clear images. x-pos will be updated when rendered since width might change.

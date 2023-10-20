@@ -86,49 +86,50 @@ def render_animations(animations):
 def render_start_screen():
     SCREEN.blit(game_setup.ss_background_image, (0, 0))
 
-    base_font = pygame.font.Font(None, 48)
+    base_font = pygame.font.Font(None, 32)
     text_rect_color_inactive = pygame.Color('gray78')
     text_rect_color_active = pygame.Color('whitesmoke')
     text_color = pygame.Color('orchid3')
     text_fill_color = pygame.Color('gray80')
 
 
+    #logo image
+    SCREEN.blit(game_setup.logo_img, (70, 70))
 
     #Name box
-    #pygame.draw.rect(SCREEN,text_fill_color,ss.name_rect) #ractangle background
     if ss.name_rect_active:
-        pygame.draw.rect(SCREEN,text_rect_color_active,ss.name_rect,5)
+        pygame.draw.rect(SCREEN,text_rect_color_active,ss.name_rect,3)
     else:
         pygame.draw.rect(SCREEN,text_rect_color_inactive,ss.name_rect,1)
     text_surface = base_font.render(game_setup.user_name, True, text_color)
     SCREEN.blit(text_surface,(ss.name_rect.x + 10, ss.name_rect.y + 10))
-    ss.name_rect.w = max(500, text_surface.get_width() + 70)
+    ss.name_rect.w = max(ss.name_rect_width, text_surface.get_width() + 70)
     #Name string relative to box
     nametext = base_font.render('Name:', True, (255, 255, 255))
-    SCREEN.blit(nametext, (ss.name_rect_x - 110, ss.name_rect_y+10))
+    SCREEN.blit(nametext, (ss.name_rect_x, ss.name_rect_y-30))
     #clear icon
-    ss.clear_name_x = ss.name_rect.x + ss.name_rect.w - 55
+    ss.clear_name_x = ss.name_rect.x + ss.name_rect.w - 45
     ss.clear_name_y = ss.name_rect.y + 1
     SCREEN.blit(game_setup.clear_img, (ss.clear_name_x, ss.clear_name_y))
 
     #Email box
     if ss.email_rect_active:
-        pygame.draw.rect(SCREEN,text_rect_color_active,ss.email_rect,5)
+        pygame.draw.rect(SCREEN,text_rect_color_active,ss.email_rect,3)
     else:
         pygame.draw.rect(SCREEN,text_rect_color_inactive,ss.email_rect,1)
     text_surface = base_font.render(game_setup.user_email, True, text_color)
     SCREEN.blit(text_surface,(ss.email_rect.x + 10, ss.email_rect.y + 10))
-    ss.email_rect.w = max(500, text_surface.get_width() + 70)
+    ss.email_rect.w = max(ss.email_rect_width, text_surface.get_width() + 70)
     # Email string relative to box
     emailtext = base_font.render('Email:', True, (255, 255, 255))
-    SCREEN.blit(emailtext, (ss.email_rect_x - 110, ss.email_rect_y+10))
+    SCREEN.blit(emailtext, (ss.email_rect_x, ss.email_rect_y-30))
     #clear icon
-    ss.clear_email_x = ss.email_rect.x + ss.email_rect.w - 55
+    ss.clear_email_x = ss.email_rect.x + ss.email_rect.w - 45
     ss.clear_email_y = ss.email_rect.y + 1
     SCREEN.blit(game_setup.clear_img, (ss.clear_email_x, ss.clear_email_y))
 
-    #ship image
-    SCREEN.blit(game_setup.ship_img, (20, const.screen_height - game_setup.ship_img.get_height()))
+    
+    
 
 
 

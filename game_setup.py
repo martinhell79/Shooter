@@ -81,10 +81,11 @@ try:
     ss_background_image = pygame.image.load("./img/ssbg1920x1080.png").convert_alpha()
     ss_background_image = pygame.transform.scale(ss_background_image, (const.screen_width, const.screen_height))
     clear_img = pygame.image.load("./img/clear.png").convert_alpha()
+    clear_img = pygame.transform.scale(clear_img, (clear_img.get_width() * 0.8, clear_img.get_height() * 0.8))
     clear_img_w = clear_img.get_width()
     clear_img_h = clear_img.get_height()
-    ship_img = pygame.image.load("./img/starship.png").convert_alpha()
-    ship_img = pygame.transform.scale(ship_img, (ship_img.get_width() * 0.25, ship_img.get_height() * 0.25))
+    logo_img = pygame.image.load("./img/Logo.png").convert_alpha()
+    logo_img = pygame.transform.scale(logo_img, (logo_img.get_width() * 0.9, logo_img.get_height() * 0.9))
 
     # flying objects
     FLYING_OBJECT = pygame.image.load("img/cyber.png") 
