@@ -113,4 +113,4 @@ def start_game(time_limit=30):
 
 
 if __name__ == "__main__":
-    start_game(10)
+    start_game(30)
