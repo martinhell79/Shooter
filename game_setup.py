@@ -33,7 +33,7 @@ const.screen_width, const.screen_height = screen.get_size() # Retrieve the actua
 pygame.key.set_repeat(500, 50)
 
 pygame.font.init() # Initialize Font
-const.DEFAULT_FONT = pygame.font.SysFont(None, const.screen_width//40)  # Scale font size to screen size. (Avoid tiny text on 4k)
+const.DEFAULT_FONT = pygame.font.SysFont(None, const.screen_width//const.DEFAULT_FONT_SIZE_MODIFIER)
 
 TRANSPARENT = (0, 0, 0, 0)
 

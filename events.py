@@ -41,8 +41,6 @@ def _consume_shoot_event(objects, planes, bonus_circle, score_popups, explosions
     mouse_x, mouse_y = pygame.mouse.get_pos()
     laser_shots.append(AnimationObject(mouse_x, mouse_y, images=game_setup.VFX_LASER, x_offset=game_setup.FLYING_OBJECT_WIDTH//17, y_offset=game_setup.FLYING_OBJECT_HEIGHT//12,size_modifier=0.07))
     if bonus_circle:
-        # distance = math.sqrt((mouse_x - bonus_circle[0].x) ** 2 + (mouse_y - bonus_circle[0].y) ** 2)
-        # if distance <= bonus_circle[0].radius:
         if (is_click_on_sprite(mouse_x, mouse_y, int(bonus_circle[0].x), int(bonus_circle[0].y), bonus_circle[0].image)):
             pygame.mixer.Sound.play(SOUND_TIME_EXTENSION)
             game_setup.time_bonus += const.BONUS_TIME

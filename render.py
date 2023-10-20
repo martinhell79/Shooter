@@ -14,11 +14,17 @@ def render_objects(objects, current_time, dt):
 
 def render_score(score):
     score_text = const.DEFAULT_FONT.render(f"Score: {int(score)}", True, const.WHITE)
-    SCREEN.blit(score_text, (10, 10))  # Display the text at (10, 10)
+    SCREEN.blit(score_text, (10, 10))
 
 def render_timer(remaining_time):
-    timer_text = const.DEFAULT_FONT.render(f"Time: {remaining_time}", True, const.WHITE)
-    SCREEN.blit(timer_text, (const.screen_width//2.1, 40))  # Display the timer at (10, 10) on the screen
+    timer_color = const.RED
+    if remaining_time > 20:
+        timer_color = const.GREEN
+    elif remaining_time > 10:
+        timer_color = const.YELLOW
+    
+    timer_text = const.DEFAULT_FONT.render(f"Time: {remaining_time}", True, timer_color)
+    SCREEN.blit(timer_text, (const.screen_width//2.3, 40))
 
 
 def popup_hitscore(score, x, y):

@@ -1,4 +1,4 @@
-from game_object import FlyingObject, CircleObject, TimedObject
+from game_object import FlyingObject, TimedObject
 from math import radians, cos, sin
 import random
 import constants as const
@@ -54,5 +54,4 @@ def spawn_plane():
 def spawn_time_adder():
     start_x = random.randint(int(0.15 * const.screen_width), int(0.85 * const.screen_width))
     start_y = random.randint(int(0.15 * const.screen_height), int(0.85 * const.screen_height))
-    # return CircleObject(start_x, start_y, 2)
     return TimedObject(x=start_x, y=start_y, image=game_setup.BONUS_TIME_CLOCK, lifespan=3, start_size_modifier=0.1, max_size_modifier=0.3, growth_rate=0.1)

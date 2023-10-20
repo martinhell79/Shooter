@@ -28,11 +28,14 @@ PLANE_PENALTY = -500
 # Colors
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
+GREEN = (0, 255, 0)
 YELLOW = (255, 255, 0)
+RED = (255, 0, 0)
 
 TRANSPARENT = (0, 0, 0, 0)
 
 DEFAULT_FONT = None
+DEFAULT_FONT_SIZE_MODIFIER = 30
 
 #Will be initialized upon setup
 screen_width = 0
