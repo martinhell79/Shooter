@@ -27,8 +27,8 @@ def display_highscores(hs_x_center, hs_y, entries_x, entries_y):
     # Sort the highscores by score in descending order
     highscores = load_highscores()
     highscores.sort(key=lambda x: x[0], reverse=True)
-    print(highscores)
-    font = pygame.font.SysFont(None, 55)  # Default font, size 36
+    #print(highscores)
+    font = pygame.font.SysFont(None, 70)  # Default font, size 36
     
     time_elapsed = pygame.time.get_ticks() / 1000
     color = (255,255,255)
@@ -66,7 +66,7 @@ def update_highscores(player_score):
         highscores.append((int(player_score), 'anonymous', game_setup.user_email))
     else:
         highscores.append((int(player_score), game_setup.user_name, game_setup.user_email))
-    print(highscores)
+    #print(highscores)
     highscores.sort(key=lambda x: x[0], reverse=True)
     #highscores = highscores[:10]  # Keep only the top 10 highscores
     #print(highscores)

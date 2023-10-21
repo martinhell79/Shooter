@@ -140,7 +140,7 @@ def render_start_screen():
     hs_rect_y = const.screen_height * 0.3
     SCREEN.blit(game_setup.hs_rect, (hs_rect_x, hs_rect_y))
     SCREEN.blit(game_setup.hs_trophy, (hs_rect_x + game_setup.hs_rect.get_width() / 2 - game_setup.hs_trophy.get_width() / 2, hs_rect_y - game_setup.hs_trophy.get_height()-10))
-    hs.display_highscores(hs_rect_x + game_setup.hs_rect.get_width() / 2, hs_rect_y + 40, 1.1 * hs_rect_x, hs_rect_y + 100)
+    hs.display_highscores(hs_rect_x + game_setup.hs_rect.get_width() / 2, hs_rect_y + 40, 1.1 * hs_rect_x, hs_rect_y + 140)
 
     # Start button
     SCREEN.blit(game_setup.start_img, (ss.start_img_x, ss.start_img_y))

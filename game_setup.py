@@ -67,15 +67,19 @@ def import_animation(vfx_dir):
 try:
     # gameplay
     background_images = [
-        pygame.image.load("./img/bg1920x1080.jpg").convert_alpha()
+        pygame.image.load("./img/bg1920x1080.png").convert_alpha()
     ]
     background_image = pygame.transform.scale(background_images[0], (const.screen_width, const.screen_height))
+    stone_img = pygame.image.load("./img/BG_stone.png").convert_alpha()
+    stone_img = pygame.transform.scale(stone_img, (stone_img.get_width() * 0.8, stone_img.get_height() * 0.8))
+    '''
     planet1 = pygame.image.load("./img/pink.png").convert_alpha()
     planet1 = pygame.transform.scale(planet1, (planet1.get_width() * 0.2, planet1.get_height() * 0.2))
     planet2 = pygame.image.load("./img/green.png").convert_alpha()
     planet2 = pygame.transform.scale(planet2, (planet2.get_width() * 0.28, planet2.get_height() * 0.28))
     planet3 = pygame.image.load("./img/orange.png").convert_alpha()
     planet3 = pygame.transform.scale(planet3, (planet3.get_width() * 0.15, planet3.get_height() * 0.15))
+    '''
 
     # Start screen imgs
     ss_background_image = pygame.image.load("./img/ssbg1920x1080.png").convert_alpha()
@@ -95,11 +99,13 @@ try:
 
 
     # flying objects
-    FLYING_OBJECT = pygame.image.load("img/cyber.png") 
-    FLYING_OBJECT_WIDTH = int(FLYING_OBJECT.get_width() * const.scale_flying_object)
-    FLYING_OBJECT_HEIGHT = int(FLYING_OBJECT.get_height() * const.scale_flying_object)
-    FLYING_OBJECT = pygame.transform.scale(FLYING_OBJECT, (FLYING_OBJECT_WIDTH, FLYING_OBJECT_HEIGHT))
-    
+    FLYING_OBJECT_L = pygame.image.load("img/cyber_l.png")
+    FLYING_OBJECT_R = pygame.image.load("img/cyber_r.png") 
+    FLYING_OBJECT_WIDTH = int(FLYING_OBJECT_L.get_width() * const.scale_flying_object) # using _L for both. Hope it works...
+    FLYING_OBJECT_HEIGHT = int(FLYING_OBJECT_L.get_height() * const.scale_flying_object)
+    FLYING_OBJECT_L = pygame.transform.scale(FLYING_OBJECT_L, (FLYING_OBJECT_WIDTH, FLYING_OBJECT_HEIGHT))
+    FLYING_OBJECT_R = pygame.transform.scale(FLYING_OBJECT_R, (FLYING_OBJECT_WIDTH, FLYING_OBJECT_HEIGHT))
+
     #plane flying left
     PLANE_L = pygame.image.load("img/plane_l.png")
     PLANE_L_WIDTH = int(PLANE_L.get_width() * const.scale_plane)
