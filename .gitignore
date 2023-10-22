@@ -48,3 +48,7 @@ coverage.xml
 
 # Game files
 highscores.txt
+
+.DS_Store
+
+launch.json

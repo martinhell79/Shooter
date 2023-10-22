@@ -125,9 +125,13 @@ try:
     BONUS_TIME_CLOCK = pygame.transform.scale(BONUS_TIME_CLOCK, (BONUS_TIME_CLOCK_WIDTH, BONUS_TIME_CLOCK_HEIGHT))
 
     # End_screen imgs
-    hand_img = pygame.image.load("./img/robot-hand.png").convert_alpha()
-    hand_img = pygame.transform.scale(hand_img, (hand_img.get_width() * 0.7, hand_img.get_height() * 0.7))
-    
+    restart_img = pygame.image.load("./img/restart.png").convert_alpha()
+    restart_img = pygame.transform.scale(restart_img, (restart_img.get_width() * 0.7, restart_img.get_height() * 0.7))
+    plane_stone_img = pygame.image.load("./img/plane_stone.png").convert_alpha()
+    plane_stone_img = pygame.transform.scale(plane_stone_img, (plane_stone_img.get_width() * 0.7, plane_stone_img.get_height() * 0.7))
+    hs_rect_es = pygame.image.load("./img/HS_Rectangle.png").convert_alpha()
+    hs_rect_es = pygame.transform.scale(hs_rect_es, (const.screen_width * 0.35, const.screen_height * 0.6))
+
     # print mask. Just to check that masking works. Will not be visible when we add background on top of it.
     mask = pygame.mask.from_surface(PLANE_R)
     for x in range(mask.get_size()[0]):

@@ -3,6 +3,7 @@ import pygame
 from game_object import AnimationObject
 import constants as const
 import start_screen as ss
+import endscreen as es
 import math
 import time
 import random
@@ -129,7 +130,10 @@ def endPageEvents():
                 return False
             elif event.key == pygame.K_RETURN: #Return character re-initializes game
                 game_setup.CurrentState = game_setup.GameState['Start_Screen']
-
+        elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+            mouse_x, mouse_y = pygame.mouse.get_pos()
+            if es.restart_img_x <= mouse_x <= es.restart_img_x + game_setup.restart_img.get_width() and es.restart_img_y <= mouse_y <= es.restart_img_y + game_setup.restart_img.get_height():
+                game_setup.CurrentState = game_setup.GameState['Start_Screen']
     return running
 
 

@@ -100,7 +100,7 @@ def start_game(time_limit=30):
             game_setup.CurrentState = GAME_STATE['Highscore_Entry']
 
         elif (game_setup.CurrentState == GAME_STATE['Highscore_Entry']):
-            running = render.render_highscore_page(score)
+            running = render.render_end_page(score)
             running = events.endPageEvents()
         
         else:

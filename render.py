@@ -2,9 +2,9 @@ import constants as const
 import game_setup
 import pygame
 import start_screen as ss
+import endscreen as es
 import highscores as hs
 
-import highscores as hs
 
 SCREEN = game_setup.screen
 
@@ -57,7 +57,7 @@ def render_cursor(crosshair_image):
     SCREEN.blit(crosshair_image, (mouse_x - crosshair_image.get_width() / 2, mouse_y - crosshair_image.get_height() / 2))
         
 
-def render_highscore_page(score):
+def render_end_page(score):
     running = True
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -69,14 +69,27 @@ def render_highscore_page(score):
     SCREEN.fill(const.BLACK)  # Clear the screen
     #pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW) # get normal cursor
     pygame.mouse.set_visible(True)
-    score_x = const.screen_width // 6 - 50
-    score_y = const.screen_height // 2 - 50
 
-    SCREEN.blit(game_setup.hand_img, (score_x, score_y + 50))
+     #logo image
+    SCREEN.blit(game_setup.logo_img, (70, 70))
 
+    #plane and stone
+    SCREEN.blit(game_setup.plane_stone_img, (es.plane_stone_x, es.plane_stone_y))
+    
+    # Restart button
+    SCREEN.blit(game_setup.restart_img, (es.restart_img_x, es.restart_img_y))
+    
+    # Highscore
+    hs_rect_es_x = const.screen_width * 0.5
+    hs_rect_es_y = const.screen_height * 0.3
+    SCREEN.blit(game_setup.hs_rect_es, (hs_rect_es_x, hs_rect_es_y))
+    SCREEN.blit(game_setup.hs_trophy, (hs_rect_es_x + game_setup.hs_rect_es.get_width() / 2 - game_setup.hs_trophy.get_width() / 2, hs_rect_es_y - game_setup.hs_trophy.get_height()-10))
+    hs.display_highscores(hs_rect_es_x + game_setup.hs_rect_es.get_width() / 2, hs_rect_es_y + 40, 1.1 * hs_rect_es_x, hs_rect_es_y + 140)
+
+    # Score
     score_text = font.render(f"Score: {int(score)}", True, const.WHITE)
-    SCREEN.blit(score_text, (score_x + 20, score_y))
-    hs.display_highscores(3 * const.screen_width // 5 , const.screen_height // 2 - 100, 3 * const.screen_width // 5 - 50, const.screen_height // 2 + 30)
+    SCREEN.blit(score_text, (es.score_x + 20, es.score_y))
+    #hs.display_highscores(3 * const.screen_width // 5 , const.screen_height // 2 - 100, 3 * const.screen_width // 5 - 200, const.screen_height // 2 + 30)
     pygame.display.flip()  # Update the display
     return running
 
