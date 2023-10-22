@@ -5,6 +5,7 @@ import constants as const
 import start_screen as ss
 import math
 import time
+import random
 from game_setup import SOUND_LASER, SOUND_EXPLOSION, SOUND_TIME_EXTENSION
 
 
@@ -39,12 +40,12 @@ def consume_events(objects, planes, bonus_circle, score_popups, explosions, lase
 def _consume_shoot_event(objects, planes, bonus_circle, score_popups, explosions, laser_shots, current_time, running):
     pygame.mixer.Sound.play(SOUND_LASER)
     mouse_x, mouse_y = pygame.mouse.get_pos()
-    laser_shots.append(AnimationObject(mouse_x, mouse_y, images=game_setup.VFX_LASER, x_offset=game_setup.FLYING_OBJECT_WIDTH//17, y_offset=game_setup.FLYING_OBJECT_HEIGHT//12,size_modifier=0.07))
+    laser_shots.append(AnimationObject(mouse_x, mouse_y, images=game_setup.VFX_LASER, x_offset=14, y_offset=12,size_modifier=0.07))
     if bonus_circle:
         if (is_click_on_sprite(mouse_x, mouse_y, int(bonus_circle[0].x), int(bonus_circle[0].y), bonus_circle[0].image)):
             pygame.mixer.Sound.play(SOUND_TIME_EXTENSION)
             game_setup.time_bonus += const.BONUS_TIME
-            explosions.append(AnimationObject(bonus_circle[0].x, bonus_circle[0].y, game_setup.VFX_EXPLOSION, x_offset=80, y_offset=100, size_modifier=0.5))
+            explosions.append(AnimationObject(bonus_circle[0].x, bonus_circle[0].y, game_setup.VFX_EXPLOSION, x_offset=10, y_offset=10, size_modifier=0.5))
             bonus_circle.pop(0)
             # We should not be penalized if we shoot a bonus on top of a plane, so just return if we hit a bonus
             return running, game_setup.score
@@ -60,7 +61,7 @@ def _consume_shoot_event(objects, planes, bonus_circle, score_popups, explosions
             # Add score popup to array
             score_popups.append({"score": score_increment, "x": mouse_x, "y": mouse_y, "timestamp": current_time})
             # Animate explosion
-            explosions.append(AnimationObject(obj.x, obj.y, game_setup.VFX_EXPLOSION, x_offset=game_setup.FLYING_OBJECT_WIDTH//30, y_offset=game_setup.FLYING_OBJECT_HEIGHT//3))
+            explosions.append(AnimationObject(obj.x, obj.y, game_setup.VFX_EXPLOSION, x_offset=70, y_offset=70))
     
     for pl in planes[:]:  
         time_elapsed = current_time - pl.timestamp    
@@ -72,7 +73,7 @@ def _consume_shoot_event(objects, planes, bonus_circle, score_popups, explosions
             # Add score popup to array
             score_popups.append({"score": score_increment, "x": mouse_x, "y": mouse_y, "timestamp": current_time})
             # Animate explosion (same for all planes currently)
-            explosions.append(AnimationObject(pl.x, pl.y, game_setup.VFX_EXPLOSION, x_offset=game_setup.PLANE_L_WIDTH//5, y_offset=game_setup.PLANE_L_HEIGHT))
+            explosions.append(AnimationObject(pl.x, pl.y, game_setup.VFX_EXPLOSION, x_offset=game_setup.PLANE_L_WIDTH//30, y_offset=game_setup.PLANE_L_HEIGHT//3))
             shot_hit_object = True
             
     if shot_hit_object:
@@ -141,5 +142,6 @@ def init_play():
     game_setup.planes = [] #[spawn.spawn_plane() for _ in range(1)]
     game_setup.objects = [] #[spawn.spawn_object() for _ in range(4)]
     game_setup.bonus_circle = []
+    game_setup.spawn_time_circles = [8 + random.randint(0, 4), 18 + random.randint(0, 5), 31 + random.randint(0, 1)]
     pass
                 
