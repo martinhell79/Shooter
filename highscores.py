@@ -2,6 +2,7 @@ import math
 import pygame
 import game_setup
 import constants as const
+import endscreen
 
 def load_highscores():
     highscores = []
@@ -65,7 +66,7 @@ def display_highscores(hs_x_center, hs_y, entries_x, entries_y, highlight_curren
         game_setup.screen.blit(score_text_2, (entries_x + 100, entries_y + 40 * i))
         game_setup.screen.blit(score_text_3, (entries_x + 230, entries_y + 40 * i))
         if i == index:
-            r = pygame.Rect(entries_x - 70, entries_y + 40 * i - 5, 230 + score_text_3.get_width() + 250, score_text_3.get_rect().height + 10)
+            r = pygame.Rect(endscreen.hs_rect_es_x + 10, entries_y + 40 * i - 5, game_setup.hs_rect_es.get_width() - 20, score_text_3.get_rect().height + 10)
             pygame.draw.rect(game_setup.screen,(233,108,169),r,4)
             print('draw rect')
     

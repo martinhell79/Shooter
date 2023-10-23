@@ -84,18 +84,16 @@ def render_end_page(score):
     
     # Player score
     SCREEN.blit(game_setup.score_img, (es.score_rect_x, es.score_rect_y))
-
-    # Highscore
-    SCREEN.blit(game_setup.hs_rect_es, (es.hs_rect_es_x, es.hs_rect_es_y))
-    hs.display_highscores(es.hs_rect_es_x + game_setup.hs_rect_es.get_width() / 2, es.hs_rect_es_y + 40, 1.15 * es.hs_rect_es_x, es.hs_rect_es_y + 140, 1)
-
-    # Score
     font_score = pygame.font.SysFont(None, int(game_setup.score_img.get_height() * 0.8))
     score_text = font_score.render(f"{int(score)}", True, const.WHITE)
     SCREEN.blit(score_text, (es.score_rect_x + 60, es.score_rect_y + 50))
     name_text = font.render(f"{game_setup.user_name}", True, const.WHITE)
     SCREEN.blit(name_text, (es.score_rect_x + int(game_setup.score_img.get_width() * 0.45), es.score_rect_y + 100))
-    #hs.display_highscores(3 * const.screen_width // 5 , const.screen_height // 2 - 100, 3 * const.screen_width // 5 - 200, const.screen_height // 2 + 30)
+    
+    # Highscore
+    SCREEN.blit(game_setup.hs_rect_es, (es.hs_rect_es_x, es.hs_rect_es_y))
+    hs.display_highscores(es.hs_rect_es_x + game_setup.hs_rect_es.get_width() / 2, es.hs_rect_es_y + 30, 1.20 * es.hs_rect_es_x, es.hs_rect_es_y + 140, 1)
+
     pygame.display.flip()  # Update the display
     return running
 
