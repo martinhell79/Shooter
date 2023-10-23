@@ -94,7 +94,7 @@ def render_end_page(score):
     score_text = font_score.render(f"{int(score)}", True, const.WHITE)
     SCREEN.blit(score_text, (es.score_rect_x + 60, es.score_rect_y + 50))
     name_text = font.render(f"{game_setup.user_name}", True, const.WHITE)
-    SCREEN.blit(name_text, (es.score_rect_x + int(game_setup.score_img.get_width() * 0.4), es.score_rect_y + 100))
+    SCREEN.blit(name_text, (es.score_rect_x + int(game_setup.score_img.get_width() * 0.45), es.score_rect_y + 100))
     #hs.display_highscores(3 * const.screen_width // 5 , const.screen_height // 2 - 100, 3 * const.screen_width // 5 - 200, const.screen_height // 2 + 30)
     pygame.display.flip()  # Update the display
     return running
@@ -112,7 +112,7 @@ def render_animations(animations):
 def render_start_screen():
     SCREEN.blit(game_setup.ss_background_image, (0, 0))
 
-    base_font = pygame.font.Font(None, 32)
+    base_font = pygame.font.Font(None, 28)
     text_rect_color_inactive = pygame.Color('gray78')
     text_rect_color_active = pygame.Color('whitesmoke')
     text_color = pygame.Color('orchid3')
@@ -122,6 +122,13 @@ def render_start_screen():
     #logo image
     SCREEN.blit(game_setup.logo_img, (70, 70))
 
+     # Highscore
+    hs_rect_x = const.screen_width * 0.33
+    hs_rect_y = const.screen_height * 0.3
+    SCREEN.blit(game_setup.hs_rect, (hs_rect_x, hs_rect_y))
+    SCREEN.blit(game_setup.hs_trophy, (hs_rect_x + game_setup.hs_rect.get_width() / 2 - game_setup.hs_trophy.get_width() / 2, hs_rect_y - game_setup.hs_trophy.get_height()-10))
+    hs.display_highscores(hs_rect_x + game_setup.hs_rect.get_width() / 2, hs_rect_y + 40, 1.1 * hs_rect_x, hs_rect_y + 140)
+
     #Name box
     if ss.name_rect_active:
         pygame.draw.rect(SCREEN,text_rect_color_active,ss.name_rect,3)
@@ -129,7 +136,7 @@ def render_start_screen():
         pygame.draw.rect(SCREEN,text_rect_color_inactive,ss.name_rect,1)
     text_surface = base_font.render(game_setup.user_name, True, text_color)
     SCREEN.blit(text_surface,(ss.name_rect.x + 10, ss.name_rect.y + 10))
-    ss.name_rect.w = max(ss.name_rect_width, text_surface.get_width() + 70)
+    #ss.name_rect.w = max(ss.name_rect_width, text_surface.get_width() + 70)
     #Name string relative to box
     nametext = base_font.render('Name:', True, (255, 255, 255))
     SCREEN.blit(nametext, (ss.name_rect_x, ss.name_rect_y-30))
@@ -138,12 +145,12 @@ def render_start_screen():
     ss.clear_name_y = ss.name_rect.y + 1
     SCREEN.blit(game_setup.clear_img, (ss.clear_name_x, ss.clear_name_y))
 
-    #Email box
+    #Email box, handle long emails
+    text_surface = base_font.render(game_setup.user_email, True, text_color)
     if ss.email_rect_active:
         pygame.draw.rect(SCREEN,text_rect_color_active,ss.email_rect,3)
     else:
         pygame.draw.rect(SCREEN,text_rect_color_inactive,ss.email_rect,1)
-    text_surface = base_font.render(game_setup.user_email, True, text_color)
     SCREEN.blit(text_surface,(ss.email_rect.x + 10, ss.email_rect.y + 10))
     ss.email_rect.w = max(ss.email_rect_width, text_surface.get_width() + 70)
     # Email string relative to box
@@ -154,13 +161,7 @@ def render_start_screen():
     ss.clear_email_y = ss.email_rect.y + 1
     SCREEN.blit(game_setup.clear_img, (ss.clear_email_x, ss.clear_email_y))
 
-    # Highscore
-    hs_rect_x = const.screen_width * 0.33
-    hs_rect_y = const.screen_height * 0.3
-    SCREEN.blit(game_setup.hs_rect, (hs_rect_x, hs_rect_y))
-    SCREEN.blit(game_setup.hs_trophy, (hs_rect_x + game_setup.hs_rect.get_width() / 2 - game_setup.hs_trophy.get_width() / 2, hs_rect_y - game_setup.hs_trophy.get_height()-10))
-    hs.display_highscores(hs_rect_x + game_setup.hs_rect.get_width() / 2, hs_rect_y + 40, 1.1 * hs_rect_x, hs_rect_y + 140)
-
+   
     # Start button
     SCREEN.blit(game_setup.start_img, (ss.start_img_x, ss.start_img_y))
     

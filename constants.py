@@ -40,3 +40,4 @@ DEFAULT_FONT_SIZE_MODIFIER = 30
 #Will be initialized upon setup
 screen_width = 0
 screen_height = 0
+

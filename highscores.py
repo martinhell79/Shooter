@@ -31,7 +31,7 @@ def display_highscores(hs_x_center, hs_y, entries_x, entries_y, highlight_curren
     index = -1
     if highlight_current:
         index = get_index(highscores, (game_setup.score, game_setup.user_name, game_setup.user_email))
-        print(f'index: {index}')
+        #print(f'index: {index}')
     
     #print(highscores)
     font = pygame.font.SysFont(None, 70)  # Default font, size 36
