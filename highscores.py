@@ -1,6 +1,7 @@
 import math
 import pygame
 import game_setup
+import constants as const
 
 def load_highscores():
     highscores = []
@@ -23,10 +24,15 @@ def save_highscores(highscores):
             file.write(f"{score}\ {name}\ {email}\n")
 
 
-def display_highscores(hs_x_center, hs_y, entries_x, entries_y):
+def display_highscores(hs_x_center, hs_y, entries_x, entries_y, highlight_current = 0):
     # Sort the highscores by score in descending order
     highscores = load_highscores()
     highscores.sort(key=lambda x: x[0], reverse=True)
+    index = -1
+    if highlight_current:
+        index = get_index(highscores, (game_setup.score, game_setup.user_name, game_setup.user_email))
+        print(f'index: {index}')
+    
     #print(highscores)
     font = pygame.font.SysFont(None, 70)  # Default font, size 36
     
@@ -52,25 +58,29 @@ def display_highscores(hs_x_center, hs_y, entries_x, entries_y):
         g = int(170 + 80 * abs(math.sin(time_elapsed * color_change_speed[i] + 2 * math.pi / 3)))
         b = int(170 + 80 * abs(math.sin(time_elapsed * color_change_speed[i] + 4 * math.pi / 3)))
         color = (r, g, b)
-        score_text = font.render(f"{i+1} {'.':<4} {int(entry[0]):<8} {entry[1]}", True, color)
-        game_setup.screen.blit(score_text, (entries_x , entries_y + 35 * i))
+        score_text_1 = font.render(f"{i+1}.", True, color)
+        score_text_2 = font.render(f"{int(entry[0]):>}", True, color)
+        score_text_3 = font.render(f"{entry[1]:<}", True, color)
+        game_setup.screen.blit(score_text_1, (entries_x , entries_y + 40 * i))
+        game_setup.screen.blit(score_text_2, (entries_x + 100, entries_y + 40 * i))
+        game_setup.screen.blit(score_text_3, (entries_x + 230, entries_y + 40 * i))
+        if i == index:
+            r = pygame.Rect(entries_x - 70, entries_y + 40 * i - 5, 230 + score_text_3.get_width() + 250, score_text_3.get_rect().height + 10)
+            pygame.draw.rect(game_setup.screen,(233,108,169),r,4)
+            print('draw rect')
     
 
 def update_highscores(player_score):
     highscores = load_highscores()
-    if game_setup.user_name == '' and game_setup.user_email == '':
-        highscores.append((int(player_score), 'anonymous', 'anonymous'))
-    elif game_setup.user_email == '':
-        highscores.append((int(player_score), game_setup.user_name, 'anonymous'))
-    elif game_setup.user_name == '':
-        highscores.append((int(player_score), 'anonymous', game_setup.user_email))
-    else:
-        highscores.append((int(player_score), game_setup.user_name, game_setup.user_email))
+    highscores.append((int(player_score), game_setup.user_name, game_setup.user_email))
     #print(highscores)
     highscores.sort(key=lambda x: x[0], reverse=True)
+    
     #highscores = highscores[:10]  # Keep only the top 10 highscores
     #print(highscores)
     save_highscores(highscores)
 
 
-
+def get_index(highscores, tuple):
+    return next((i for i, x in enumerate(highscores) if x == tuple), -1)
+    

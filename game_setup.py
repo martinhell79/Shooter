@@ -27,7 +27,7 @@ num_displays = pygame.display.get_num_displays() #Use this to let user choose sc
 chosen_screen = 0  # This could be an index selected by the player
 screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN, display=chosen_screen) # Create the screen in fullscreen mode
 const.screen_width, const.screen_height = screen.get_size() # Retrieve the actual screen dimensions
-
+print(f'screen size: {const.screen_width}x{const.screen_height}')
 
 #Allow holding key down to enable multiple chars
 pygame.key.set_repeat(500, 50)
@@ -125,12 +125,16 @@ try:
     BONUS_TIME_CLOCK = pygame.transform.scale(BONUS_TIME_CLOCK, (BONUS_TIME_CLOCK_WIDTH, BONUS_TIME_CLOCK_HEIGHT))
 
     # End_screen imgs
+    esbg_img = pygame.image.load("./img/esbg1920x1080.png").convert_alpha()
+    esbg_img = pygame.transform.scale(esbg_img, (const.screen_width, const.screen_height))
+    score_img = pygame.image.load("./img/score_rect.png").convert_alpha()
+    score_img = pygame.transform.scale(score_img, (const.screen_width * 0.5, const.screen_height * 0.2))
     restart_img = pygame.image.load("./img/restart.png").convert_alpha()
     restart_img = pygame.transform.scale(restart_img, (restart_img.get_width() * 0.7, restart_img.get_height() * 0.7))
     plane_stone_img = pygame.image.load("./img/plane_stone.png").convert_alpha()
-    plane_stone_img = pygame.transform.scale(plane_stone_img, (plane_stone_img.get_width() * 0.7, plane_stone_img.get_height() * 0.7))
+    plane_stone_img = pygame.transform.scale(plane_stone_img, (plane_stone_img.get_width() * 1, plane_stone_img.get_height() * 1))
     hs_rect_es = pygame.image.load("./img/HS_Rectangle.png").convert_alpha()
-    hs_rect_es = pygame.transform.scale(hs_rect_es, (const.screen_width * 0.35, const.screen_height * 0.6))
+    hs_rect_es = pygame.transform.scale(hs_rect_es, (const.screen_width * 0.5, const.screen_height * 0.60))
 
     # print mask. Just to check that masking works. Will not be visible when we add background on top of it.
     mask = pygame.mask.from_surface(PLANE_R)

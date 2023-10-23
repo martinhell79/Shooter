@@ -147,5 +147,7 @@ def init_play():
     game_setup.objects = [] #[spawn.spawn_object() for _ in range(4)]
     game_setup.bonus_circle = []
     game_setup.spawn_time_circles = [8 + random.randint(0, 4), 18 + random.randint(0, 5), 31 + random.randint(0, 1)]
+    game_setup.user_name = game_setup.user_name or 'Anonymous'
+    game_setup.user_email = game_setup.user_email or 'Anonymous'
     pass
                 
