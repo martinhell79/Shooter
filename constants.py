@@ -41,3 +41,5 @@ DEFAULT_FONT_SIZE_MODIFIER = 30
 screen_width = 0
 screen_height = 0
 
+# Max plays per email
+MAX_PLAYS_PER_EMAIL = 5

@@ -84,3 +84,7 @@ def update_highscores(player_score):
 def get_index(highscores, tuple):
     return next((i for i, x in enumerate(highscores) if x == tuple), -1)
     
+def get_email_occurences(email):
+    highscores = load_highscores()
+    return len([a[2] for a in highscores if a[2] == email])
+    

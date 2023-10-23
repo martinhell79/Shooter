@@ -8,6 +8,7 @@ import math
 import time
 import random
 from game_setup import SOUND_LASER, SOUND_EXPLOSION, SOUND_TIME_EXTENSION
+import highscores as hs
 
 
 SCREEN = game_setup.screen
@@ -111,8 +112,9 @@ def startScreenEvents():
             if ss.email_rect.collidepoint(event.pos):
                 ss.switchActiveBox('email')
             if ss.start_img_x <= mouse_x <= ss.start_img_x + game_setup.start_img.get_width() and ss.start_img_y <= mouse_y <= ss.start_img_y + game_setup.start_img.get_height():
-                init_play()
-                return True
+                if hs.get_email_occurences(game_setup.user_email) < 5 or game_setup.user_email == 'Anonymous':
+                    init_play()
+                    return True
                 # Handle the Start button click
                 print("Start button clicked!")
                 print(f"Name: {game_setup.user_name}")
