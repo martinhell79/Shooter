@@ -97,7 +97,7 @@ def startScreenEvents():
                 return True
             elif event.key == pygame.K_BACKSPACE:
                 ss.eraseActiveString()
-            elif 32 <= event.key <= 126: #accept printable characters as input
+            elif event.unicode in const.ALLOWED_CHARS: #accept printable characters as input
                 ss.appendActiveString(event.unicode)
             elif event.key == pygame.K_TAB:
                 ss.switchActiveBox()

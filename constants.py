@@ -43,3 +43,9 @@ screen_height = 0
 
 # Max plays per email
 MAX_PLAYS_PER_EMAIL = 5
+
+# Allowed characters
+ALLOWED_CHARS = set(
+    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+    "!#$%&'*+-/=?^_`{|}~."
+)

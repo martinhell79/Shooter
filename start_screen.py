@@ -5,13 +5,13 @@ import constants as const
 
 name_rect_x = const.screen_width * 0.03
 name_rect_y = const.screen_height * 0.4
-name_rect_width = const.screen_width * 0.26
+name_rect_width = const.screen_width * 0.2
 name_rect_height = 40
 name_rect = pygame.Rect(name_rect_x,name_rect_y, name_rect_width, name_rect_height)
 
 email_rect_x = const.screen_width * 0.03
 email_rect_y = const.screen_height * 0.50
-email_rect_width = const.screen_width * 0.26
+email_rect_width = const.screen_width * 0.2
 email_rect_height = 40
 email_rect = pygame.Rect(email_rect_x,email_rect_y,email_rect_width,email_rect_height)
 
@@ -38,7 +38,7 @@ def eraseActiveString():
         game_setup.user_email = game_setup.user_email[:-1] 
 
 def appendActiveString(c):
-    if name_rect_active and len(game_setup.user_name) < 17:
+    if name_rect_active and len(game_setup.user_name) < 12:
        game_setup.user_name += c
     elif email_rect_active and len(game_setup.user_email) < 30:
         game_setup.user_email += c
