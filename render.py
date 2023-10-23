@@ -94,7 +94,6 @@ def render_end_page(score):
     SCREEN.blit(game_setup.hs_rect_es, (es.hs_rect_es_x, es.hs_rect_es_y))
     hs.display_highscores(es.hs_rect_es_x + game_setup.hs_rect_es.get_width() / 2, es.hs_rect_es_y + 30, 1.20 * es.hs_rect_es_x, es.hs_rect_es_y + 140, 1)
 
-    pygame.display.flip()  # Update the display
     return running
 
 

@@ -22,6 +22,7 @@ plane_r = game_setup.PLANE_R
 
 def start_game(time_limit=30):
     #Gameplay variables
+    clock = pygame.time.Clock()
     remaining_time = time_limit
     #planes = game_setup.planes #[spawn.spawn_plane() for _ in range(1)] # Lets start with one plane
     #objects = game_setup.objects #[spawn.spawn_object() for _ in range(4)] # Initialize the first object and object list
@@ -40,12 +41,9 @@ def start_game(time_limit=30):
         if (game_setup.CurrentState == GAME_STATE['Start_Screen']):
             render.render_start_screen()
             running = events.startScreenEvents()
-            pygame.display.flip()
 
         elif (game_setup.CurrentState == GAME_STATE['Playing']):
             SCREEN.blit(background_image, (0, 0))
-            #SCREEN.blit(game_setup.planet1, (50,50))
-            #SCREEN.blit(game_setup.planet2, (const.screen_width - 450, 100))
             SCREEN.blit(game_setup.stone_img, (0.1 * const.screen_width, 0.6 * const.screen_height))
             render.render_cursor(crosshair_image)
             
@@ -90,10 +88,9 @@ def start_game(time_limit=30):
                 game_setup.spawn_time_circles.pop(0)
 
 
-            pygame.display.flip()  # Update the display
+            
 
         elif (game_setup.CurrentState == GAME_STATE['Game_Over']):
-            #hs.load_highscores()
             print(f'score: {score}')
             print(f'game_setup.score: {game_setup.score}')
             hs.update_highscores(score)
@@ -106,8 +103,15 @@ def start_game(time_limit=30):
         else:
             print('No matching game state - quitting')
             running = False
-
-    #print(f"Final Score: {score}")
+        
+        '''
+        frame_rate = clock.get_fps()
+        frame_rate_text = const.DEFAULT_FONT.render(f"FPS: {frame_rate:.2f}", True, (255, 255, 255))
+        SCREEN.blit(frame_rate_text, (10, 40))
+        '''
+        clock.tick(60)
+        pygame.display.flip()  # Update the display
+    
     pygame.quit()
 
 

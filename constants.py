@@ -47,5 +47,5 @@ MAX_PLAYS_PER_EMAIL = 5
 # Allowed characters
 ALLOWED_CHARS = set(
     "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-    "!#$%&'*+-/=?^_`{|}~."
+    "!#$%&'*+-/=?^_`{|}~.@"
 )

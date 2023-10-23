@@ -40,7 +40,7 @@ def eraseActiveString():
 def appendActiveString(c):
     if name_rect_active and len(game_setup.user_name) < 12:
        game_setup.user_name += c
-    elif email_rect_active and len(game_setup.user_email) < 30:
+    elif email_rect_active and len(game_setup.user_email) < 45:
         game_setup.user_email += c
 
 def switchActiveBox(str=''):
