@@ -110,17 +110,20 @@ def render_start_screen():
     text_fill_color = pygame.Color('gray80')
 
 
-    #logo image
+    # logo image
     SCREEN.blit(game_setup.logo_img, (70, 70))
 
-     # Highscore
+    # Highscore
     hs_rect_x = const.screen_width * 0.33
     hs_rect_y = const.screen_height * 0.3
     SCREEN.blit(game_setup.hs_rect, (hs_rect_x, hs_rect_y))
     SCREEN.blit(game_setup.hs_trophy, (hs_rect_x + game_setup.hs_rect.get_width() / 2 - game_setup.hs_trophy.get_width() / 2, hs_rect_y - game_setup.hs_trophy.get_height()-10))
     hs.display_highscores(hs_rect_x + game_setup.hs_rect.get_width() / 2, hs_rect_y + 40, 1.1 * hs_rect_x, hs_rect_y + 140)
 
-    #Name box
+    # Instructions
+    SCREEN.blit(game_setup.instr_img, (ss.instr_img_x, ss.instr_img_y))
+
+    # Name box
     if ss.name_rect_active:
         pygame.draw.rect(SCREEN,text_rect_color_active,ss.name_rect,3)
     else:
@@ -131,12 +134,12 @@ def render_start_screen():
     #Name string relative to box
     nametext = base_font.render('Name:', True, (255, 255, 255))
     SCREEN.blit(nametext, (ss.name_rect_x, ss.name_rect_y-30))
-    #clear icon
+    # clear icon
     ss.clear_name_x = ss.name_rect.x + ss.name_rect.w - 45
     ss.clear_name_y = ss.name_rect.y + 1
     SCREEN.blit(game_setup.clear_img, (ss.clear_name_x, ss.clear_name_y))
 
-    #Email box, handle long emails
+    # Email box, handle long emails
     text_surface = base_font.render(game_setup.user_email, True, text_color)
     if ss.email_rect_active:
         pygame.draw.rect(SCREEN,text_rect_color_active,ss.email_rect,3)
@@ -147,7 +150,7 @@ def render_start_screen():
     # Email string relative to box
     emailtext = base_font.render('Email:', True, (255, 255, 255))
     SCREEN.blit(emailtext, (ss.email_rect_x, ss.email_rect_y-30))
-    #clear icon
+    # clear icon
     ss.clear_email_x = ss.email_rect.x + ss.email_rect.w - 45
     ss.clear_email_y = ss.email_rect.y + 1
     SCREEN.blit(game_setup.clear_img, (ss.clear_email_x, ss.clear_email_y))

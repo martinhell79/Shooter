@@ -30,6 +30,8 @@ email_rect_active = False
 start_img_x = const.screen_width - game_setup.start_img.get_width() - 70
 start_img_y = const.screen_height - game_setup.start_img.get_height() - 50
 
+instr_img_x = const.screen_width - game_setup.start_img.get_width() - 70
+instr_img_y = const.screen_height * 0.1
 
 def eraseActiveString():
     if name_rect_active:

@@ -96,6 +96,8 @@ try:
     hs_trophy = pygame.transform.scale(hs_trophy, (hs_rect.get_width() * 0.2, hs_rect.get_width() * 0.2))
     start_img = pygame.image.load("./img/Start_button.png").convert_alpha()
     start_img = pygame.transform.scale(start_img, (start_img.get_width() * 1, start_img.get_height() * 1))
+    instr_img = pygame.image.load("./img/instructions.png").convert_alpha()
+    instr_img = pygame.transform.scale(instr_img, (instr_img.get_width() * 1, instr_img.get_height() * 1))
 
 
     # flying objects
