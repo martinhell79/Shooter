@@ -43,16 +43,18 @@ def _consume_shoot_event(objects, planes, bonus_circle, score_popups, explosions
     pygame.mixer.Sound.play(SOUND_LASER)
     mouse_x, mouse_y = pygame.mouse.get_pos()
     laser_shots.append(AnimationObject(mouse_x, mouse_y, images=game_setup.VFX_LASER, x_offset=14, y_offset=12,size_modifier=0.07))
+    shot_hit_object = False
     if bonus_circle:
         if (is_click_on_sprite(mouse_x, mouse_y, int(bonus_circle[0].x), int(bonus_circle[0].y), bonus_circle[0].image)):
             pygame.mixer.Sound.play(SOUND_TIME_EXTENSION)
             game_setup.time_bonus += const.BONUS_TIME
             explosions.append(AnimationObject(bonus_circle[0].x, bonus_circle[0].y, game_setup.VFX_EXPLOSION, x_offset=10, y_offset=10, size_modifier=0.5))
             bonus_circle.pop(0)
+            shot_hit_object = True
             # We should not be penalized if we shoot a bonus on top of a plane, so just return if we hit a bonus
             return running, game_setup.score
         
-    shot_hit_object = False
+    
     for obj in objects[:]:
         time_elapsed = current_time - obj.timestamp
         if (is_click_on_sprite(mouse_x, mouse_y, int(obj.x), int(obj.y), obj.image)):
