@@ -58,13 +58,6 @@ def render_cursor(crosshair_image):
         
 
 def render_end_page(score):
-    running = True
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
-        elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_ESCAPE:
-                running = False
     font = pygame.font.SysFont(None, 55)
     SCREEN.fill(const.BLACK)  # Clear the screen
     #pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW) # get normal cursor
@@ -94,7 +87,8 @@ def render_end_page(score):
     SCREEN.blit(game_setup.hs_rect_es, (es.hs_rect_es_x, es.hs_rect_es_y))
     hs.display_highscores(es.hs_rect_es_x + game_setup.hs_rect_es.get_width() / 2, es.hs_rect_es_y + 30, 1.20 * es.hs_rect_es_x, es.hs_rect_es_y + 140, 1)
 
-    return running
+  
+
 
 
 def render_animations(animations):

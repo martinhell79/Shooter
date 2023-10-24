@@ -8,7 +8,6 @@ import spawn
 import events
 import render
 
-
 GAME_STATE = game_setup.GameState
 SCREEN = game_setup.screen
 time_bonus = 0
@@ -17,8 +16,6 @@ crosshair_image = game_setup.crosshair_image
 hotspot = game_setup.hotspot
 plane_l = game_setup.PLANE_L
 plane_r = game_setup.PLANE_R
-
-
 
 def start_game(time_limit=30):
     #Gameplay variables
@@ -97,7 +94,7 @@ def start_game(time_limit=30):
             game_setup.CurrentState = GAME_STATE['Highscore_Entry']
 
         elif (game_setup.CurrentState == GAME_STATE['Highscore_Entry']):
-            running = render.render_end_page(score)
+            render.render_end_page(game_setup.score)
             running = events.endPageEvents()
         
         else:
