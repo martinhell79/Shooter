@@ -50,7 +50,7 @@ def _consume_shoot_event(objects, planes, bonus_circle, score_popups, explosions
             game_setup.time_bonus += const.BONUS_TIME
             explosions.append(AnimationObject(bonus_circle[0].x, bonus_circle[0].y, game_setup.VFX_EXPLOSION, x_offset=10, y_offset=10, size_modifier=0.5))
             bonus_circle.pop(0)
-            shot_hit_object = True
+            pygame.mixer.Sound.play(SOUND_EXPLOSION)
             # We should not be penalized if we shoot a bonus on top of a plane, so just return if we hit a bonus
             return running, game_setup.score
         
