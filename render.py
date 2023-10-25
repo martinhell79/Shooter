@@ -114,7 +114,7 @@ def render_start_screen():
     SCREEN.blit(game_setup.logo_img, (70, 70))
 
     # Highscore
-    hs_rect_x = const.screen_width * 0.33
+    hs_rect_x = const.screen_width * 0.30
     hs_rect_y = const.screen_height * 0.3
     SCREEN.blit(game_setup.hs_rect, (hs_rect_x, hs_rect_y))
     SCREEN.blit(game_setup.hs_trophy, (hs_rect_x + game_setup.hs_rect.get_width() / 2 - game_setup.hs_trophy.get_width() / 2, hs_rect_y - game_setup.hs_trophy.get_height()-10))
