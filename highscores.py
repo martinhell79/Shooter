@@ -4,6 +4,9 @@ import game_setup
 import constants as const
 import endscreen
 
+highscore = []
+highscore_loaded = False
+
 def load_highscores():
     highscores = []
     try:
@@ -25,9 +28,9 @@ def save_highscores(highscores):
             file.write(f"{score}\ {name}\ {email}\n")
 
 
-def display_highscores(hs_x_center, hs_y, entries_x, entries_y, highlight_current = 0):
+def display_highscores(highscores, hs_x_center, hs_y, entries_x, entries_y, highlight_current = 0):
     # Sort the highscores by score in descending order
-    highscores = load_highscores()
+    #highscores = load_highscores()
     highscores.sort(key=lambda x: x[0], reverse=True)
     index = -1
     if highlight_current:

@@ -84,8 +84,11 @@ def render_end_page(score):
     SCREEN.blit(name_text, (es.score_rect_x + int(game_setup.score_img.get_width() * 0.45), es.score_rect_y + 100))
     
     # Highscore
+    if not hs.highscore_loaded:
+        hs.highscore = hs.load_highscores()
+        hs.highscore_loaded = True
     SCREEN.blit(game_setup.hs_rect_es, (es.hs_rect_es_x, es.hs_rect_es_y))
-    hs.display_highscores(es.hs_rect_es_x + game_setup.hs_rect_es.get_width() / 2, es.hs_rect_es_y + 30, 1.20 * es.hs_rect_es_x, es.hs_rect_es_y + 140, 1)
+    hs.display_highscores(hs.highscore, es.hs_rect_es_x + game_setup.hs_rect_es.get_width() / 2, es.hs_rect_es_y + 30, 1.20 * es.hs_rect_es_x, es.hs_rect_es_y + 140, 1)
 
   
 
@@ -107,18 +110,20 @@ def render_start_screen():
     text_rect_color_inactive = pygame.Color('gray78')
     text_rect_color_active = pygame.Color('whitesmoke')
     text_color = pygame.Color('orchid3')
-    text_fill_color = pygame.Color('gray80')
 
 
     # logo image
     SCREEN.blit(game_setup.logo_img, (70, 70))
 
     # Highscore
+    if not hs.highscore_loaded:
+        hs.highscore = hs.load_highscores()
+        hs.highscore_loaded = True
     hs_rect_x = const.screen_width * 0.30
     hs_rect_y = const.screen_height * 0.3
     SCREEN.blit(game_setup.hs_rect, (hs_rect_x, hs_rect_y))
     SCREEN.blit(game_setup.hs_trophy, (hs_rect_x + game_setup.hs_rect.get_width() / 2 - game_setup.hs_trophy.get_width() / 2, hs_rect_y - game_setup.hs_trophy.get_height()-10))
-    hs.display_highscores(hs_rect_x + game_setup.hs_rect.get_width() / 2, hs_rect_y + 40, 1.1 * hs_rect_x, hs_rect_y + 140)
+    hs.display_highscores(hs.highscore,hs_rect_x + game_setup.hs_rect.get_width() / 2, hs_rect_y + 40, 1.1 * hs_rect_x, hs_rect_y + 140)
 
     # Instructions
     SCREEN.blit(game_setup.instr_img, (ss.instr_img_x, ss.instr_img_y))

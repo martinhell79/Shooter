@@ -134,15 +134,18 @@ def endPageEvents():
                 return False
             elif event.key == pygame.K_RETURN: #Return character re-initializes game
                 game_setup.CurrentState = game_setup.GameState['Start_Screen']
+                hs.highscore_loaded = False
         elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
             mouse_x, mouse_y = pygame.mouse.get_pos()
             if es.restart_img_x <= mouse_x <= es.restart_img_x + game_setup.restart_img.get_width() and es.restart_img_y <= mouse_y <= es.restart_img_y + game_setup.restart_img.get_height():
                 game_setup.CurrentState = game_setup.GameState['Start_Screen']
+                hs.highscore_loaded = False
     return running
 
 
 def init_play():
     game_setup.CurrentState = game_setup.GameState['Playing']
+    hs.highscore_loaded = False
     game_setup.start_time = pygame.time.get_ticks()
     game_setup.time_bonus = 0
     game_setup.score = 0
