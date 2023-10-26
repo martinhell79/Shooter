@@ -61,7 +61,7 @@ def render_end_page(score):
     font = pygame.font.SysFont(None, 55)
     SCREEN.fill(const.BLACK)  # Clear the screen
     #pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW) # get normal cursor
-    pygame.mouse.set_visible(True)
+    #pygame.mouse.set_visible(True)
 
     # background
     SCREEN.blit(game_setup.esbg_img, (0, 0))

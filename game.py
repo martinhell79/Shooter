@@ -18,6 +18,7 @@ plane_l = game_setup.PLANE_L
 plane_r = game_setup.PLANE_R
 
 def start_game(time_limit=30):
+    
     #Gameplay variables
     clock = pygame.time.Clock()
     remaining_time = time_limit
@@ -35,6 +36,7 @@ def start_game(time_limit=30):
     game_setup.CurrentState = GAME_STATE['Start_Screen'];
     running = True
     while running:
+        
         if (game_setup.CurrentState == GAME_STATE['Start_Screen']):
             render.render_start_screen()
             running = events.startScreenEvents()
@@ -42,7 +44,7 @@ def start_game(time_limit=30):
         elif (game_setup.CurrentState == GAME_STATE['Playing']):
             SCREEN.blit(background_image, (0, 0))
             SCREEN.blit(game_setup.stone_img, (0.1 * const.screen_width, 0.6 * const.screen_height))
-            render.render_cursor(crosshair_image)
+            
             
             current_time = time.time()
             dt = current_time - game_setup.last_time
@@ -62,7 +64,7 @@ def start_game(time_limit=30):
             render.render_timer(remaining_time)
             render.render_score_popups(score_popups, current_time=current_time)
 
-            render.render_cursor(crosshair_image)
+            #render.render_cursor(crosshair_image)
 
             explosions = render.render_animations(explosions)
             laser_shots = render.render_animations(laser_shots)
@@ -101,6 +103,7 @@ def start_game(time_limit=30):
             print('No matching game state - quitting')
             running = False
         
+        render.render_cursor(crosshair_image)
         '''
         frame_rate = clock.get_fps()
         frame_rate_text = const.DEFAULT_FONT.render(f"FPS: {frame_rate:.2f}", True, (255, 255, 255))
