@@ -69,7 +69,7 @@ def _consume_shoot_event(objects, planes, bonus_circle, score_popups, explosions
     
     for pl in planes[:]:  
         time_elapsed = current_time - pl.timestamp    
-        print(f'x: {pl.x} y: {pl.y} mx: {mouse_x} my: {mouse_y}') 
+        #print(f'x: {pl.x} y: {pl.y} mx: {mouse_x} my: {mouse_y}') 
         if (is_click_on_sprite(mouse_x, mouse_y, int(pl.x), int(pl.y), pl.image)):
             score_increment = const.PLANE_PENALTY
             planes.remove(pl)

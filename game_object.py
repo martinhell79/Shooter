@@ -63,6 +63,7 @@ class FlyingObject(BaseObject):
         self.y += self.velocity[1] * dt
 
 
+'''
 class CircleObject(BaseObject):
     def __init__(self, x, y, lifespan, debug=False):
         super().__init__(x, y)
@@ -78,7 +79,7 @@ class CircleObject(BaseObject):
         if self.radius >= const.BONUS_CIRCLE_RADIUS:
             circle_text = font.render(f"+3s", True, (255, 255, 255))
             screen.blit(circle_text, (int(self.x) - 20, int(self.y) - 10))
-        '''
+        
         # Calculate time remaining for the non-flying object
         time_elapsed = current_time - self.timestamp
         self.time_remaining = max(0, self.lifespan - time_elapsed)
@@ -92,7 +93,7 @@ class CircleObject(BaseObject):
             screen.blit(lifespan_text, (int(self.x) - 25, int(self.y) - 20))
 
         # Optionally, you can add interaction logic here
-        '''
+    
     def update(self, dt):
         # Calculate the elapsed time since creation
         self.elapsed_time = time.time() - self.creation_time
@@ -100,7 +101,7 @@ class CircleObject(BaseObject):
         # Gradually increase the radius until it reaches max_radius
         if self.radius < const.BONUS_CIRCLE_RADIUS:
             self.radius += self.growth_rate
-
+'''
 
 class TimedObject(BaseObject):
     def __init__(self, x, y, image, lifespan, start_size_modifier=0.1, max_size_modifier=1, growth_rate=0.1, debug=False):
@@ -121,9 +122,9 @@ class TimedObject(BaseObject):
 
     def draw(self, screen, font, current_time=None):
         screen.blit(self.image, (int(self.x), int(self.y)))
-        if self.elapsed_time >= self.lifespan:
-            popup_text = font.render("+3s", True, (255, 255, 255))
-            screen.blit(popup_text, (int(self.x) - 20, int(self.y) - 10))
+        #if self.elapsed_time >= self.lifespan:
+        #    popup_text = font.render("+3s", True, (255, 255, 255))
+        #    screen.blit(popup_text, (int(self.x) - 20, int(self.y) - 10))
 
     def update(self, dt=None):
         self.elapsed_time = time.time() - self.creation_time
