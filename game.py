@@ -71,7 +71,7 @@ def start_game(time_limit=30):
 
             # Remove objects that have left the screen
             game_setup.objects = [obj for obj in game_setup.objects if obj.x >= -50 and obj.x <= const.screen_width + 50 and obj.y >= -50 and obj.y <= const.screen_height + 50]
-            game_setup.planes = [plane for plane in game_setup.planes if plane.x > -50 and plane.x <= const.screen_width + 50 and plane.y >= -50 and plane.y <= const.screen_height + 50]
+            game_setup.planes = [plane for plane in game_setup.planes if plane.x > -(game_setup.PLANE_R_WIDTH) and plane.x <= const.screen_width + 50 and plane.y >= -50 and plane.y <= const.screen_height + 50]
             
             # remove bonus circles if lifespan has passed
             bonus_circle = [bs for bs in bonus_circle if bs.elapsed_time < bs.lifespan]

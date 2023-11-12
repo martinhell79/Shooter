@@ -60,7 +60,7 @@ def spawn_plane():
     elif dir == 1:
         angle = radians(345)
         plane = plane_r
-        start_x = -50
+        start_x = -(game_setup.PLANE_R_WIDTH)
         start_y = random.randint(int(0.10 * const.screen_height), int(0.60 * const.screen_height))
     velocity = [speed * cos(angle), -speed * sin(angle)] 
     return FlyingObject(start_x, start_y, plane, velocity, speed)
