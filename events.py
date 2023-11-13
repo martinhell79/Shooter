@@ -94,9 +94,9 @@ def startScreenEvents():
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
                 return False
-            elif event.key == pygame.K_RETURN: #Return character starts game                
-                init_play()
-                return True
+            #elif event.key == pygame.K_RETURN: #Return character starts game                
+            #    init_play()
+            #    return True
             elif event.key == pygame.K_BACKSPACE:
                 ss.eraseActiveString()
             elif event.unicode in const.ALLOWED_CHARS: #accept printable characters as input
