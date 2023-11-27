@@ -71,7 +71,7 @@ def display_highscores(highscores, hs_x_center, hs_y, entries_x, entries_y, high
         if i == index:
             r = pygame.Rect(endscreen.hs_rect_es_x + 30, entries_y + 40 * i - 5, game_setup.hs_rect_es.get_width() - 60, score_text_3.get_rect().height + 10)
             pygame.draw.rect(game_setup.screen,(233,108,169),r,4)
-            print('draw rect')
+            #print('draw rect')
     
 
 def update_highscores(player_score):
