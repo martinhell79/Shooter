@@ -41,13 +41,15 @@ You can customize the game by modifying the following settings:
 
 ## Using a lightgun
 
-Though independent of the implementation, here are some notes that could be useful if you use the AimTrak lightgun to play the game. 
+Though independent of the implementation, here are some notes that could be useful if you use the AimTrak lightgun to play the game.
 
 - Figure out what distance from the screen is best to have a smooth experience.
 - Unplug other peripherals that are not needed. We sometimes experienced some problems when other peripherals were connected.
 - Though not officially written on the webpage for the gun, Mac computers worked well with the gun out of the box.
 - If gun starts acting weird and freezes, just unplug and plug it in again.
 - Make sure the receiver is firmly placed on the TV/monitor and is pointing in the right direction.
+
+Use the documentation for additional info and calibration instructions [here](https://www.ultimarc.com/light-guns/aimtrak-light-gun/aimtrak-light-gun-without-recoil/).
 
 ## License
 
