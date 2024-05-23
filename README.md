@@ -30,8 +30,8 @@ Shooter is a simple computer game where players can test their aiming and shooti
 
 You can customize the game by modifying the following settings:
 
-- In `constants.py` you can modify size and speed of objects if you are not happy with the defaults.
-- If no name/email is entered, Anonymous will be used instead. In `constants.py` there is a varaible `MAX_PLAYS_PER_EMAIL` that is used to limit the number of plays for a unique email. This variable does not apply to anonymous play.
+- In `constants.py` you can modify size and speed of objects if you are not happy with the defaults. You can also define the object images that you want to shoot. For best result, use transparent background and possibly use different images for left and right flying objects.
+- If no name/email is entered, Anonymous will be used instead. In `constants.py` there is a variable `MAX_PLAYS_PER_EMAIL` that is used to limit the number of plays for a unique email. This variable does not apply to anonymous play.
 - If you want to change which screen the game is started on, you can change the variable `chosen_screen` in `game_setup.py`. 0 is default but you can change it to 1 or 2 depending on which screen you want to run it on. However, note that if you use a lightgun, that might calibrate on the primary screen so it would then be better to change the primary screen on your computer's settings and keep the `chosen_screen = 0` value.
   
 ## Highscores
