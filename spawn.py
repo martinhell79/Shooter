@@ -4,8 +4,8 @@ import random
 import constants as const
 import game_setup
 
-flying_object_l = game_setup.FLYING_OBJECT_L
-flying_object_r = game_setup.FLYING_OBJECT_R
+flying_objects = game_setup.flying_objects
+#flying_object_r = game_setup.FLYING_OBJECT_R
 plane_l = game_setup.PLANE_L
 plane_r = game_setup.PLANE_R
 
@@ -41,11 +41,12 @@ def spawn_object():
     angle = radians(random.uniform(min_angle, max_angle))
     speed = random.uniform(const.MIN_SPEED_FLYING_OBJECT, const.MAX_SPEED_FLYING_OBJECT)
     velocity = [speed * cos(angle), -speed * sin(angle)]
+    # randomize a flying object
     # use x-velocity to determine which pic to use
     if velocity[0] < 0:
-        return FlyingObject(initial_x, initial_y, flying_object_l, velocity, speed)
+        return FlyingObject(initial_x, initial_y, random.choice(flying_objects)[0], velocity, speed)
     else:
-        return FlyingObject(initial_x, initial_y, flying_object_r, velocity, speed)
+        return FlyingObject(initial_x, initial_y, random.choice(flying_objects)[1], velocity, speed)
 
 
 #spawn new plane that flies on a static path across the screen.

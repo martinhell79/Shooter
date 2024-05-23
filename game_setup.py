@@ -63,6 +63,15 @@ def import_animation(vfx_dir):
 
     return vfx_frames
 
+def load_and_scale_images(path_l, path_r, scale):
+    image_l = pygame.image.load(path_l)
+    image_r = pygame.image.load(path_r)
+    width = int(image_l.get_width() * scale)
+    height = int(image_l.get_height() * scale)
+    image_l = pygame.transform.scale(image_l, (width, height))
+    image_r = pygame.transform.scale(image_r, (width, height))
+    return image_l, image_r
+
 # Load all images
 try:
     # gameplay
@@ -101,13 +110,12 @@ try:
 
 
     # flying objects
-    FLYING_OBJECT_L = pygame.image.load("img/cyber_l.png")
-    FLYING_OBJECT_R = pygame.image.load("img/cyber_r.png") 
-    FLYING_OBJECT_WIDTH = int(FLYING_OBJECT_L.get_width() * const.scale_flying_object) # using _L for both. Hope it works...
-    FLYING_OBJECT_HEIGHT = int(FLYING_OBJECT_L.get_height() * const.scale_flying_object)
-    FLYING_OBJECT_L = pygame.transform.scale(FLYING_OBJECT_L, (FLYING_OBJECT_WIDTH, FLYING_OBJECT_HEIGHT))
-    FLYING_OBJECT_R = pygame.transform.scale(FLYING_OBJECT_R, (FLYING_OBJECT_WIDTH, FLYING_OBJECT_HEIGHT))
+    flying_objects = []
+    for path_l, path_r, scale in const.flying_objects_data:
+        scaled_images = load_and_scale_images(path_l, path_r, scale)
+        flying_objects.append(scaled_images)
 
+    
     #plane flying left
     PLANE_L = pygame.image.load("img/plane_l.png")
     PLANE_L_WIDTH = int(PLANE_L.get_width() * const.scale_plane)
