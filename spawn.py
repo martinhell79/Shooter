@@ -5,7 +5,6 @@ import constants as const
 import game_setup
 
 flying_objects = game_setup.flying_objects
-#flying_object_r = game_setup.FLYING_OBJECT_R
 plane_l = game_setup.PLANE_L
 plane_r = game_setup.PLANE_R
 
