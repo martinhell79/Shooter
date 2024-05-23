@@ -1,8 +1,10 @@
 # The size of non-flying objects
 OBJ_SIZE = 20  
 
-# Scale flying objects if images are not correct size
-scale_flying_object = 0.9
+# Shootable images and how to scale them. Adding more array entries will ranomize which image is used in each new spawn.
+flying_objects_data = [
+    ("img/cyber_l.png", "img/cyber_r.png", 0.9)
+]
 
 scale_bonus_time_clock = 0.5
 
